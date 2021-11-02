@@ -1521,7 +1521,11 @@ public:
             caster->AddAura(16913, caster); // Vengeance R5
             caster->AddAura(33607, caster); // Wrath of Cenarius R5
             caster->AddAura(81001, caster); // Celestial Focus R3 (only pushback effect)
-            caster->ToPlayer()->learnSpell(81002, false); // Starfire R1 custom rank
+
+            if (!caster->HasSpell(81002)) // Starfire R1 custom rank
+            {
+                caster->ToPlayer()->learnSpell(81002, false); // Starfire R1 custom rank
+            }            
         }
 
         void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned

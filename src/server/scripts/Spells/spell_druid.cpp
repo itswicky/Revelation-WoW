@@ -1502,7 +1502,8 @@ enum Balancespecspells
     WRATH_OF_CENARIUS   = 81010,
     VENGEANCE           = 81009,
     STARFIRE_R1         = 81002,
-    CELESTIAL_FOCUS     = 81001
+    CELESTIAL_FOCUS     = 81001,
+    BALANCE_SPEC        = 81011
 };
 
 // 81000 Balance Specialization
@@ -1529,6 +1530,7 @@ public:
             if (caster->HasSpell(STARFIRE_R1))
                 return;
 
+            caster->learnSpell(BALANCE_SPEC, false);
             caster->learnSpell(STARLIGHT_WRATH, false);
             caster->learnSpell(VENGEANCE, false);
             caster->learnSpell(CELESTIAL_FOCUS, false);
@@ -1541,6 +1543,7 @@ public:
             if (!caster)
                 return;
 
+            caster->removeSpell(BALANCE_SPEC, SPEC_MASK_ALL, false);
             caster->removeSpell(STARLIGHT_WRATH, SPEC_MASK_ALL, false);
             caster->removeSpell(VENGEANCE, SPEC_MASK_ALL, false);
             caster->removeSpell(CELESTIAL_FOCUS, SPEC_MASK_ALL, false);

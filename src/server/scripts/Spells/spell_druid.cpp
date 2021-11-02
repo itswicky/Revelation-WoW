@@ -1526,7 +1526,7 @@ public:
             if (!caster)
                 return;
 
-            if (!caster->HasSpell(STARFIRE_R1))
+            if (caster->HasSpell(STARFIRE_R1))
                 return;
 
             caster->learnSpell(STARLIGHT_WRATH, false);

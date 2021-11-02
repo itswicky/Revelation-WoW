@@ -1496,6 +1496,58 @@ public:
     }
 };
 
+// 81000 Balance Specialization
+class spell_dru_balance_spec : public SpellScriptLoader
+{
+public:
+    spell_dru_balance_spec() : SpellScriptLoader("spell_dru_balance_spec") {}
+
+    class spell_dru_balance_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_dru_balance_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Unit* caster = GetCaster();
+            if (!caster)
+                return;
+
+            caster->AddAura(16818, caster); // Starlight Wrath R5
+            caster->AddAura(16913, caster); // Vengeance R5
+            caster->AddAura(33607, caster); // Wrath of Cenarius R5
+            caster->AddAura(81001, caster); // Celestial Focus R3 (only pushback effect)
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Unit* caster = GetCaster();
+            if (!caster)
+                return;
+
+            caster->RemoveAura(16818); // Starlight Wrath R5
+            caster->RemoveAura(16913); // Vengeance R5
+            caster->RemoveAura(33607); // Wrath of Cenarius R5
+            caster->RemoveAura(81001); // Celestial Focus R3 (only pushback effect)
+        } 
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_dru_balance_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_dru_balance_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_dru_balance_spec_AuraScript();
+    }
+};
+
 void AddSC_druid_spell_scripts()
 {
     new spell_dru_bear_form_passive();
@@ -1531,4 +1583,5 @@ void AddSC_druid_spell_scripts()
     new spell_dru_typhoon();
     new spell_dru_t10_restoration_4p_bonus();
     new spell_dru_wild_growth();
+    new spell_dru_balance_spec();
 }

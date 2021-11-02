@@ -1496,6 +1496,15 @@ public:
     }
 };
 
+enum Balancespecspells
+{
+    STARLIGHT_WRATH     = 81004,
+    WRATH_OF_CENARIUS   = 81010,
+    VENGEANCE           = 81009,
+    STARFIRE_R1         = 81002,
+    CELESTIAL_FOCUS     = 81001
+};
+
 // 81000 Balance Specialization
 class spell_dru_balance_spec : public SpellScriptLoader
 {
@@ -1513,32 +1522,29 @@ public:
 
         void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
         {
-            Unit* caster = GetCaster();
+            Player* caster = GetCaster()->ToPlayer();
             if (!caster)
                 return;
 
-            caster->AddAura(16818, caster); // Starlight Wrath R5
-            caster->AddAura(16913, caster); // Vengeance R5
-            caster->AddAura(33607, caster); // Wrath of Cenarius R5
-            caster->AddAura(81001, caster); // Celestial Focus R3 (only pushback effect)
+            if (!caster->HasSpell(STARFIRE_R1))
+                return;
 
-            if (!caster->HasSpell(81002)) // Starfire R1 custom rank
-            {
-                caster->ToPlayer()->learnSpell(81002, false); // Starfire R1 custom rank
-            }            
+            caster->learnSpell(STARLIGHT_WRATH, false);
+            caster->learnSpell(VENGEANCE, false);
+            caster->learnSpell(CELESTIAL_FOCUS, false);
+            caster->learnSpell(STARFIRE_R1, false);
         }
 
         void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
         {
-            Unit* caster = GetCaster();
+            Player* caster = GetCaster()->ToPlayer();
             if (!caster)
                 return;
 
-            caster->RemoveAura(16818); // Starlight Wrath R5
-            caster->RemoveAura(16913); // Vengeance R5
-            caster->RemoveAura(33607); // Wrath of Cenarius R5
-            caster->RemoveAura(81001); // Celestial Focus R3 (only pushback effect)
-            caster->ToPlayer()->removeSpell(81002, SPEC_MASK_ALL, false); // Starfire R1 custom rank
+            caster->removeSpell(STARLIGHT_WRATH, SPEC_MASK_ALL, false);
+            caster->removeSpell(VENGEANCE, SPEC_MASK_ALL, false);
+            caster->removeSpell(CELESTIAL_FOCUS, SPEC_MASK_ALL, false);
+            caster->removeSpell(STARFIRE_R1, SPEC_MASK_ALL, false);
         } 
 
         void Register() override

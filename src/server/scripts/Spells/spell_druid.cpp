@@ -1577,9 +1577,9 @@ enum Feralspecspells
     FERAL_SPECIALIZATION    = 81034,
     MANGLE_CAT              = 81038,
     FERAL_SWIFTNESS         = 81042,
-    FEROCITY                = 81043,
+    FEROCITY_CAT            = 81043,
     FERAL_INSTINCT          = 81044,
-    SAVAGE_FURY_R1          = 81045,
+    SAVAGE_FURY_R1_CAT      = 81045,
     BLOOD_FRENZY            = 81047,
     FERAL_CHARGE_CAT        = 49376,
 };
@@ -1622,9 +1622,9 @@ public:
             caster->removeSpell(FERAL_SPECIALIZATION, SPEC_MASK_ALL, false);
             caster->removeSpell(MANGLE_CAT, SPEC_MASK_ALL, false);
             caster->removeSpell(BLOOD_FRENZY, SPEC_MASK_ALL, false);
-            caster->removeSpell(FEROCITY, SPEC_MASK_ALL, false);
+            caster->removeSpell(FEROCITY_CAT, SPEC_MASK_ALL, false);
             caster->removeSpell(FERAL_INSTINCT, SPEC_MASK_ALL, false);
-            caster->removeSpell(SAVAGE_FURY_R1, SPEC_MASK_ALL, false);
+            caster->removeSpell(SAVAGE_FURY_R1_CAT, SPEC_MASK_ALL, false);
             caster->removeSpell(FERAL_SWIFTNESS, SPEC_MASK_ALL, false);
             caster->removeSpell(FERAL_CHARGE_CAT, SPEC_MASK_ALL, false);
         }
@@ -1650,6 +1650,8 @@ enum Guardianspecspells
     SURVIVAL_INSTINCTS      = 61336,
     PRIMAL_FURY             = 81049,
     FERAL_CHARGE_BEAR       = 16979,
+    FEROCITY_BEAR           = 81055,
+    SAVAGE_FURY_R1_BEAR     = 81056,
 };
 
 // 81036 Guardian Specialization
@@ -1690,9 +1692,9 @@ public:
             caster->removeSpell(GUARDIAN_SPECIALIZATION, SPEC_MASK_ALL, false);
             caster->removeSpell(MANGLE_BEAR, SPEC_MASK_ALL, false);
             caster->removeSpell(PRIMAL_FURY, SPEC_MASK_ALL, false);
-            caster->removeSpell(FEROCITY, SPEC_MASK_ALL, false);
+            caster->removeSpell(FEROCITY_BEAR, SPEC_MASK_ALL, false);
             caster->removeSpell(THICK_HIDE, SPEC_MASK_ALL, false);
-            caster->removeSpell(SAVAGE_FURY_R1, SPEC_MASK_ALL, false);
+            caster->removeSpell(SAVAGE_FURY_R1_BEAR, SPEC_MASK_ALL, false);
             caster->removeSpell(SURVIVAL_INSTINCTS, SPEC_MASK_ALL, false);
             caster->removeSpell(FERAL_CHARGE_BEAR, SPEC_MASK_ALL, false);
         }

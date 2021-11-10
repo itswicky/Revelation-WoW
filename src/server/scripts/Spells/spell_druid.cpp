@@ -1503,7 +1503,10 @@ enum Balancespecspells
     VENGEANCE           = 81009,
     STARFIRE_R1         = 81002,
     CELESTIAL_FOCUS     = 81001,
-    BALANCE_SPEC        = 81011
+    BALANCE_SPEC        = 81011,
+    MOONGLOW_R1         = 81003,
+    NATURES_GRACE       = 81005,
+    MOONFURY_R1         = 81006
 };
 
 // 81000 Balance Specialization
@@ -1548,6 +1551,9 @@ public:
             caster->removeSpell(VENGEANCE, SPEC_MASK_ALL, false);
             caster->removeSpell(CELESTIAL_FOCUS, SPEC_MASK_ALL, false);
             caster->removeSpell(STARFIRE_R1, SPEC_MASK_ALL, false);
+            caster->removeSpell(MOONFURY_R1, SPEC_MASK_ALL, false);
+            caster->removeSpell(NATURES_GRACE, SPEC_MASK_ALL, false);
+            caster->removeSpell(MOONGLOW_R1, SPEC_MASK_ALL, false);
         } 
 
         void Register() override

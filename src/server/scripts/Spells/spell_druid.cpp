@@ -1581,6 +1581,7 @@ enum Feralspecspells
     FERAL_INSTINCT          = 81044,
     SAVAGE_FURY_R1          = 81045,
     BLOOD_FRENZY            = 81047,
+    FERAL_CHARGE_CAT        = 49376,
 };
 
 // 81007 Feral Specialization
@@ -1620,11 +1621,12 @@ public:
 
             caster->removeSpell(FERAL_SPECIALIZATION, SPEC_MASK_ALL, false);
             caster->removeSpell(MANGLE_CAT, SPEC_MASK_ALL, false);
-            caster->removeSpell(FERAL_SWIFTNESS, SPEC_MASK_ALL, false);
-            caster->removeSpell(FEROCITY, SPEC_MASK_ALL, false);
             caster->removeSpell(BLOOD_FRENZY, SPEC_MASK_ALL, false);
+            caster->removeSpell(FEROCITY, SPEC_MASK_ALL, false);
+            caster->removeSpell(FERAL_INSTINCT, SPEC_MASK_ALL, false);
             caster->removeSpell(SAVAGE_FURY_R1, SPEC_MASK_ALL, false);
             caster->removeSpell(FERAL_SWIFTNESS, SPEC_MASK_ALL, false);
+            caster->removeSpell(FERAL_CHARGE_CAT, SPEC_MASK_ALL, false);
         }
 
         void Register() override
@@ -1647,6 +1649,7 @@ enum Guardianspecspells
     THICK_HIDE              = 81048,
     SURVIVAL_INSTINCTS      = 61336,
     PRIMAL_FURY             = 81049,
+    FERAL_CHARGE_BEAR       = 16979,
 };
 
 // 81036 Guardian Specialization
@@ -1691,6 +1694,7 @@ public:
             caster->removeSpell(THICK_HIDE, SPEC_MASK_ALL, false);
             caster->removeSpell(SAVAGE_FURY_R1, SPEC_MASK_ALL, false);
             caster->removeSpell(SURVIVAL_INSTINCTS, SPEC_MASK_ALL, false);
+            caster->removeSpell(FERAL_CHARGE_BEAR, SPEC_MASK_ALL, false);
         }
 
         void Register() override

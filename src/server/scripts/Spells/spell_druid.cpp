@@ -1572,6 +1572,211 @@ public:
     }
 };
 
+enum Feralspecspells
+{
+    FERAL_SPECIALIZATION    = 81034,
+    MANGLE_CAT              = 81038,
+    FERAL_SWIFTNESS         = 81042,
+    FEROCITY                = 81043,
+    FERAL_INSTINCT          = 81044,
+    SAVAGE_FURY_R1          = 81045,
+    BLOOD_FRENZY            = 81047,
+};
+
+// 81007 Feral Specialization
+class spell_dru_feral_spec : public SpellScriptLoader
+{
+public:
+    spell_dru_feral_spec() : SpellScriptLoader("spell_dru_feral_spec") {}
+
+    class spell_dru_feral_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_dru_feral_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(MANGLE_CAT))
+                return;
+
+            caster->learnSpell(FERAL_SPECIALIZATION, false);
+            caster->learnSpell(MANGLE_CAT, false);
+            caster->learnSpell(BLOOD_FRENZY, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(FERAL_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(MANGLE_CAT, SPEC_MASK_ALL, false);
+            caster->removeSpell(FERAL_SWIFTNESS, SPEC_MASK_ALL, false);
+            caster->removeSpell(FEROCITY, SPEC_MASK_ALL, false);
+            caster->removeSpell(BLOOD_FRENZY, SPEC_MASK_ALL, false);
+            caster->removeSpell(SAVAGE_FURY_R1, SPEC_MASK_ALL, false);
+            caster->removeSpell(FERAL_SWIFTNESS, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_dru_feral_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_dru_feral_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_dru_feral_spec_AuraScript();
+    }
+};
+
+enum Guardianspecspells
+{
+    GUARDIAN_SPECIALIZATION = 81037,
+    MANGLE_BEAR             = 81039,
+    THICK_HIDE              = 81048,
+    SURVIVAL_INSTINCTS      = 61336,
+    PRIMAL_FURY             = 81049,
+};
+
+// 81036 Guardian Specialization
+class spell_dru_guardian_spec : public SpellScriptLoader
+{
+public:
+    spell_dru_guardian_spec() : SpellScriptLoader("spell_dru_guardian_spec") {}
+
+    class spell_dru_guardian_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_dru_guardian_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(MANGLE_BEAR))
+                return;
+
+            caster->learnSpell(GUARDIAN_SPECIALIZATION, false);
+            caster->learnSpell(MANGLE_BEAR, false);
+            caster->learnSpell(PRIMAL_FURY, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(GUARDIAN_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(MANGLE_BEAR, SPEC_MASK_ALL, false);
+            caster->removeSpell(PRIMAL_FURY, SPEC_MASK_ALL, false);
+            caster->removeSpell(FEROCITY, SPEC_MASK_ALL, false);
+            caster->removeSpell(THICK_HIDE, SPEC_MASK_ALL, false);
+            caster->removeSpell(SAVAGE_FURY_R1, SPEC_MASK_ALL, false);
+            caster->removeSpell(SURVIVAL_INSTINCTS, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_dru_guardian_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_dru_guardian_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_dru_guardian_spec_AuraScript();
+    }
+};
+
+enum Restorationspecspells
+{
+    RESTORATION_SPECIALIZATION  = 81035,
+    SWIFTMEND                   = 18562,
+    NATURES_SWIFTNESS           = 17116,
+    NATURALIST                  = 81050,
+    NATURES_FOCUS               = 81051,
+    INTESITY                    = 81052,
+    TRANQUIL_SPIRIT             = 81053,
+    GIFT_OF_NATURE              = 81054,
+};
+
+// 81036 Restoration Specialization
+class spell_dru_restoration_spec : public SpellScriptLoader
+{
+public:
+    spell_dru_restoration_spec() : SpellScriptLoader("spell_dru_restoration_spec") {}
+
+    class spell_dru_restoration_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_dru_restoration_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(SWIFTMEND))
+                return;
+
+            caster->learnSpell(RESTORATION_SPECIALIZATION, false);
+            caster->learnSpell(SWIFTMEND, false);
+            caster->learnSpell(NATURALIST, false);
+            caster->learnSpell(NATURES_FOCUS, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(RESTORATION_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(SWIFTMEND, SPEC_MASK_ALL, false);
+            caster->removeSpell(NATURALIST, SPEC_MASK_ALL, false);
+            caster->removeSpell(NATURES_FOCUS, SPEC_MASK_ALL, false);
+            caster->removeSpell(INTESITY, SPEC_MASK_ALL, false);
+            caster->removeSpell(TRANQUIL_SPIRIT, SPEC_MASK_ALL, false);
+            caster->removeSpell(GIFT_OF_NATURE, SPEC_MASK_ALL, false);
+            caster->removeSpell(NATURES_SWIFTNESS, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_dru_restoration_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_dru_restoration_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_dru_restoration_spec_AuraScript();
+    }
+};
+
 void AddSC_druid_spell_scripts()
 {
     new spell_dru_bear_form_passive();
@@ -1608,4 +1813,7 @@ void AddSC_druid_spell_scripts()
     new spell_dru_t10_restoration_4p_bonus();
     new spell_dru_wild_growth();
     new spell_dru_balance_spec();
+    new spell_dru_feral_spec();
+    new spell_dru_guardian_spec();
+    new spell_dru_restoration_spec();
 }

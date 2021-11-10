@@ -6964,8 +6964,6 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                 }
                 enum Eclipsespells
                 {
-                    ECLIPSE_R1          = 81028,
-                    ECLIPSE_R2          = 81029,
                     ECLIPSE_SOLAR_R1    = 81030,
                     ECLIPSE_SOLAR_R2    = 81031,
                     ECLIPSE_LUNAR_R1    = 81032,
@@ -6984,9 +6982,9 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
 
                     target = this;
                     uint32 rank = dummySpell->GetRank();
-                    if (rank == 1 & target->HasAura(isWrathSpell ? ECLIPSE_SOLAR_R1 : ECLIPSE_LUNAR_R1))
+                    if (target->HasAura(isWrathSpell ? ECLIPSE_SOLAR_R1 : ECLIPSE_LUNAR_R1))
                         return false;
-                    if (rank == 2 & target->HasAura(isWrathSpell ? ECLIPSE_SOLAR_R2 : ECLIPSE_LUNAR_R2))
+                    if (target->HasAura(isWrathSpell ? ECLIPSE_SOLAR_R2 : ECLIPSE_LUNAR_R2))
                         return false;
 
                     if (rank == 1)

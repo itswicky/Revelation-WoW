@@ -6984,10 +6984,12 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
 
                     target = this;
                     uint32 rank = dummySpell->GetRank();
-                    if (target->HasAura(isWrathSpell ? ECLIPSE_SOLAR_R1 | ECLIPSE_SOLAR_R2 : ECLIPSE_LUNAR_R1 | ECLIPSE_LUNAR_R2))
+                    if (rank == 1 & target->HasAura(isWrathSpell ? ECLIPSE_SOLAR_R1 : ECLIPSE_LUNAR_R1))
+                        return false;
+                    if (rank == 2 & target->HasAura(isWrathSpell ? ECLIPSE_SOLAR_R2 : ECLIPSE_LUNAR_R2))
                         return false;
 
-                    if (rank = 1)
+                    if (rank == 1)
                     {
                         triggered_spell_id = isWrathSpell ? ECLIPSE_LUNAR_R1 : ECLIPSE_SOLAR_R1;
                         break;

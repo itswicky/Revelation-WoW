@@ -1506,7 +1506,8 @@ enum Balancespecspells
     BALANCE_SPEC        = 81011,
     MOONGLOW_R1         = 81003,
     NATURES_GRACE       = 81005,
-    MOONFURY_R1         = 81006
+    MOONFURY_R1         = 81006,
+    ECLIPSE_R1          = 81028,
 };
 
 // 81000 Balance Specialization
@@ -1538,6 +1539,7 @@ public:
             caster->learnSpell(VENGEANCE, false);
             caster->learnSpell(CELESTIAL_FOCUS, false);
             caster->learnSpell(STARFIRE_R1, false);
+            caster->learnSpell(ECLIPSE_R1, false);
         }
 
         void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
@@ -1554,6 +1556,7 @@ public:
             caster->removeSpell(MOONFURY_R1, SPEC_MASK_ALL, false);
             caster->removeSpell(NATURES_GRACE, SPEC_MASK_ALL, false);
             caster->removeSpell(MOONGLOW_R1, SPEC_MASK_ALL, false);
+            caster->removeSpell(ECLIPSE_R1, SPEC_MASK_ALL, false);
         } 
 
         void Register() override

@@ -6962,6 +6962,15 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                             return true;
                         }
                 }
+                enum Eclipsespells
+                {
+                    ECLIPSE_R1          = 81028,
+                    ECLIPSE_R2          = 81029,
+                    ECLIPSE_SOLAR_R1    = 81030,
+                    ECLIPSE_SOLAR_R2    = 81031,
+                    ECLIPSE_LUNAR_R1    = 81032,
+                    ECLIPSE_LUNAR_R2    = 81033
+                };
                 // Eclipse
                 if (dummySpell->SpellIconID == 2856 && GetTypeId() == TYPEID_PLAYER)
                 {
@@ -6974,11 +6983,20 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                         return false;
 
                     target = this;
-                    if (target->HasAura(isWrathSpell ? 48517 : 48518))
+                    uint32 rank = dummySpell->GetRank();
+                    if (target->HasAura(isWrathSpell ? ECLIPSE_SOLAR_R1 | ECLIPSE_SOLAR_R2 : ECLIPSE_LUNAR_R1 | ECLIPSE_LUNAR_R2))
                         return false;
 
-                    triggered_spell_id = isWrathSpell ? 48518 : 48517;
-                    break;
+                    if (rank = 1)
+                    {
+                        triggered_spell_id = isWrathSpell ? ECLIPSE_LUNAR_R1 : ECLIPSE_SOLAR_R1;
+                        break;
+                    }
+                    else
+                    {
+                        triggered_spell_id = isWrathSpell ? ECLIPSE_LUNAR_R2 : ECLIPSE_SOLAR_R2;
+                        break;
+                    }                        
                 }
                 [[fallthrough]]; // TODO: Not sure whether the fallthrough was a mistake (forgetting a break) or intended. This should be double-checked.
             }

@@ -13119,6 +13119,22 @@ void Player::LearnTalent(uint32 talentId, uint32 talentRank)
                 return;
         }
 
+    // Check if it is exclusive with another talent
+    if (talentInfo->addToSpellBook >= 2)
+    {
+        // loop through all talents
+        for (uint32 i = 0; i < sTalentStore.GetNumRows(); i++)
+            if (TalentEntry const* tmpTalent = sTalentStore.LookupEntry(i))
+                // check if talent has a flags value of 2 or greater
+                if (tmpTalent->addToSpellBook >= 2)
+                    // check if we already know a spell with flags value 2 or greater
+                    if (HasSpell(tmpTalent->RankID[0]))
+                    {
+                        GetSession()->SendNotification("You may only have one specialization selected at a time.");
+                        return;
+                    }
+    }
+
     // xinef: check amount of points spent in current talent tree
     // xinef: be smart and quick
     uint32 spentPoints = 0;
@@ -13133,8 +13149,12 @@ void Player::LearnTalent(uint32 talentId, uint32 talentRank)
                             spentPoints += talentPos->rank + 1;
     }
 
-    // xinef: we do not have enough talent points to add talent of this tier
-    if (spentPoints < (talentInfo->Row * MAX_TALENT_RANK))
+    // xinef: we do not have enough talent points to add talent of this tier - custom check for 1 point per tier
+    if (spentPoints < (talentInfo->Row * MAX_TALENT_RANK - 4))
+        return;
+
+    // custom check for only 1 talent per tier
+    if (spentPoints >= ((talentInfo->Row) + 1))
         return;
 
     // xinef: hacking attempt, tries to learn unknown rank

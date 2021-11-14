@@ -1492,6 +1492,240 @@ class spell_hun_lock_and_load : public SpellScriptLoader
         }
 };
 
+enum BeastMasteryspecspells
+{
+    BEAST_MASTERY_SPECIALIZATION    = 82001,
+    STEADY_SHOT_BEAST_MASTERY       = 82006,
+    GO_FOR_THE_THROAT               = 82008,
+    IMPROVED_REVIVE_PET             = 82009,
+    ASPECT_MASTERY                  = 82010,
+    BEAST_MASTERY                   = 82011,
+    KILL_COMMAND                    = 82012,
+};
+
+// 82000 Beast Mastery Specialization
+class spell_hun_beastmastery_spec : public SpellScriptLoader
+{
+public:
+    spell_hun_beastmastery_spec() : SpellScriptLoader("spell_hun_beastmastery_spec") {}
+
+    class spell_hun_beastmastery_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_hun_beastmastery_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(KILL_COMMAND))
+                return;
+
+            caster->learnSpell(KILL_COMMAND, false);
+            caster->learnSpell(BEAST_MASTERY, false);
+            caster->learnSpell(BEAST_MASTERY_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(KILL_COMMAND, SPEC_MASK_ALL, false);
+            caster->removeSpell(BEAST_MASTERY, SPEC_MASK_ALL, false);
+            caster->removeSpell(BEAST_MASTERY_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(STEADY_SHOT_BEAST_MASTERY, SPEC_MASK_ALL, false);
+            caster->removeSpell(GO_FOR_THE_THROAT, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_REVIVE_PET, SPEC_MASK_ALL, false);
+            caster->removeSpell(ASPECT_MASTERY, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_hun_beastmastery_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_hun_beastmastery_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_hun_beastmastery_spec_AuraScript();
+    }
+};
+
+enum Marksmanshipspecspells
+{
+    MARKSMANSHIP_SPECIALIZATION     = 82003,
+    STEADY_SHOT_MARKSMANSHIP        = 82007,
+    AIMED_SHOT                      = 82014,
+    IMPROVED_ASPECT_OF_THE_HAWK     = 82015,
+    IMPROVED_HUNTERS_MARK           = 82016,
+    WILD_QUIVER                     = 82017,
+};
+
+// 82002 Marksmanship Specialization
+class spell_hun_marksmanship_spec : public SpellScriptLoader
+{
+public:
+    spell_hun_marksmanship_spec() : SpellScriptLoader("spell_hun_marksmanship_spec") {}
+
+    class spell_hun_marksmanship_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_hun_marksmanship_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(AIMED_SHOT))
+                return;
+
+            caster->learnSpell(AIMED_SHOT, false);
+            caster->learnSpell(WILD_QUIVER, false);
+            caster->learnSpell(MARKSMANSHIP_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(AIMED_SHOT, SPEC_MASK_ALL, false);
+            caster->removeSpell(WILD_QUIVER, SPEC_MASK_ALL, false);
+            caster->removeSpell(MARKSMANSHIP_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(STEADY_SHOT_MARKSMANSHIP, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_ASPECT_OF_THE_HAWK, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_HUNTERS_MARK, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_hun_marksmanship_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_hun_marksmanship_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_hun_marksmanship_spec_AuraScript();
+    }
+};
+
+enum Survivalspecspells
+{
+    SURVIVAL_SPECIALIZATION     = 82005,
+    CARVE                       = 82023,
+    SURVIVALIST                 = 82025,
+    SAVAGE_STRIKES              = 82018,
+    IMPROVED_STINGS             = 82020,
+    TRAP_MASTERY                = 82022,
+    CARVE_DOT                   = 82026,
+};
+
+// 82004 Survival Specialization
+class spell_hun_survival_spec : public SpellScriptLoader
+{
+public:
+    spell_hun_survival_spec() : SpellScriptLoader("spell_hun_survival_spec") {}
+
+    class spell_hun_survival_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_hun_survival_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(CARVE))
+                return;
+
+            caster->learnSpell(CARVE, false);
+            caster->learnSpell(SURVIVALIST, false);
+            caster->learnSpell(SURVIVAL_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(CARVE, SPEC_MASK_ALL, false);
+            caster->removeSpell(SURVIVALIST, SPEC_MASK_ALL, false);
+            caster->removeSpell(SURVIVAL_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(SAVAGE_STRIKES, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_STINGS, SPEC_MASK_ALL, false);
+            caster->removeSpell(TRAP_MASTERY, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_hun_survival_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_hun_survival_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_hun_survival_spec_AuraScript();
+    }
+};
+
+// -82023 - Carve
+class spell_hun_carve : public SpellScriptLoader
+{
+public:
+    spell_hun_carve() : SpellScriptLoader("spell_hun_carve") {}
+
+    class spell_hun_carve_SpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_hun_carve_SpellScript);
+
+        bool Validate(SpellInfo const* /*spellInfo*/) override
+        {
+            return ValidateSpellInfo({CARVE});
+        }
+
+        void HandleDummy(SpellEffIndex /*effIndex*/)
+        {
+            int32 damage = GetEffectValue();
+            GetHitUnit()->CastDelayedSpellWithPeriodicAmount(GetCaster(), CARVE_DOT, SPELL_AURA_PERIODIC_DAMAGE, damage);
+        }
+
+        void Register() override
+        {
+            OnEffectHit += SpellEffectFn(spell_hun_carve_SpellScript::HandleDummy, EFFECT_1, SPELL_EFFECT_DUMMY);
+        }
+    };
+
+    SpellScript* GetSpellScript() const override
+    {
+        return new spell_hun_carve_SpellScript();
+    }
+};
+
 void AddSC_hunter_spell_scripts()
 {
     // Ours
@@ -1502,6 +1736,10 @@ void AddSC_hunter_spell_scripts()
     new spell_hun_generic_scaling();
     new spell_hun_taming_the_beast();
     new spell_hun_glyph_of_arcane_shot();
+    new spell_hun_beastmastery_spec();
+    new spell_hun_marksmanship_spec();
+    new spell_hun_survival_spec();
+    new spell_hun_carve();
 
     // Theirs
     new spell_hun_aspect_of_the_beast();

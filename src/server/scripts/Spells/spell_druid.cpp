@@ -1535,8 +1535,6 @@ public:
                 return;
 
             caster->learnSpell(BALANCE_SPEC, false);
-            caster->learnSpell(STARLIGHT_WRATH, false);
-            caster->learnSpell(VENGEANCE, false);
             caster->learnSpell(CELESTIAL_FOCUS, false);
             caster->learnSpell(STARFIRE_R1, false);
             caster->learnSpell(ECLIPSE_R1, false);

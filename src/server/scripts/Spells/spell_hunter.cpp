@@ -1494,13 +1494,17 @@ class spell_hun_lock_and_load : public SpellScriptLoader
 
 enum BeastMasteryspecspells
 {
-    BEAST_MASTERY_SPECIALIZATION    = 82001,
-    STEADY_SHOT_BEAST_MASTERY       = 82006,
-    GO_FOR_THE_THROAT               = 82008,
-    IMPROVED_REVIVE_PET             = 82009,
-    ASPECT_MASTERY                  = 82010,
-    BEAST_MASTERY                   = 82011,
-    KILL_COMMAND                    = 82012,
+    BEAST_MASTERY_SPECIALIZATION        = 82001,
+    STEADY_SHOT_BEAST_MASTERY           = 82006,
+    GO_FOR_THE_THROAT                   = 82008,
+    IMPROVED_REVIVE_PET                 = 82009,
+    ASPECT_MASTERY                      = 82010,
+    BEAST_MASTERY                       = 82011,
+    KILL_COMMAND                        = 82012,
+    ASPECT_OF_THE_BEAST_BEAST_MASTERY   = 13161,
+    ASPECT_OF_THE_MONKEY_BEAST_MASTERY  = 13163,
+    EYES_OF_THE_BEAST_BEAST_MASTERY     = 1002,
+    MULTI_SHOT_BEAST_MASTERY            = 82028,
 };
 
 // 82000 Beast Mastery Specialization
@@ -1545,6 +1549,10 @@ public:
             caster->removeSpell(GO_FOR_THE_THROAT, SPEC_MASK_ALL, false);
             caster->removeSpell(IMPROVED_REVIVE_PET, SPEC_MASK_ALL, false);
             caster->removeSpell(ASPECT_MASTERY, SPEC_MASK_ALL, false);
+            caster->removeSpell(ASPECT_OF_THE_BEAST_BEAST_MASTERY, SPEC_MASK_ALL, false);
+            caster->removeSpell(ASPECT_OF_THE_MONKEY_BEAST_MASTERY, SPEC_MASK_ALL, false);
+            caster->removeSpell(EYES_OF_THE_BEAST_BEAST_MASTERY, SPEC_MASK_ALL, false);
+            caster->removeSpell(MULTI_SHOT_BEAST_MASTERY, SPEC_MASK_ALL, false);
         }
 
         void Register() override
@@ -1568,6 +1576,7 @@ enum Marksmanshipspecspells
     IMPROVED_ASPECT_OF_THE_HAWK     = 82015,
     IMPROVED_HUNTERS_MARK           = 82016,
     WILD_QUIVER                     = 82017,
+    MULTI_SHOT_MARKSMANSHIP         = 2643,
 };
 
 // 82002 Marksmanship Specialization
@@ -1611,6 +1620,7 @@ public:
             caster->removeSpell(STEADY_SHOT_MARKSMANSHIP, SPEC_MASK_ALL, false);
             caster->removeSpell(IMPROVED_ASPECT_OF_THE_HAWK, SPEC_MASK_ALL, false);
             caster->removeSpell(IMPROVED_HUNTERS_MARK, SPEC_MASK_ALL, false);
+            caster->removeSpell(MULTI_SHOT_MARKSMANSHIP, SPEC_MASK_ALL, false);
         }
 
         void Register() override
@@ -1628,13 +1638,19 @@ public:
 
 enum Survivalspecspells
 {
-    SURVIVAL_SPECIALIZATION     = 82005,
-    CARVE                       = 82023,
-    SURVIVALIST                 = 82025,
-    SAVAGE_STRIKES              = 82018,
-    IMPROVED_STINGS             = 82020,
-    TRAP_MASTERY                = 82022,
-    CARVE_DOT                   = 82026,
+    SURVIVAL_SPECIALIZATION         = 82005,
+    CARVE                           = 82023,
+    SURVIVALIST                     = 82025,
+    SAVAGE_STRIKES                  = 82018,
+    IMPROVED_STINGS                 = 82020,
+    TRAP_MASTERY                    = 82022,
+    CARVE_DOT                       = 82026,
+    ASPECT_OF_THE_BEAST_SURVIVAL    = 82027,
+    ASPECT_OF_THE_MONEKY_SURVIVAL   = 82030,
+    WING_CLIP                       = 2974,
+    EYES_OF_THE_BEAST_SURVIVAL      = 82029,
+    IMMOLATION_TRAP                 = 13795,
+    MONGOOSE_BITE                   = 1495,
 };
 
 // 82004 Survival Specialization

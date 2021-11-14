@@ -1720,6 +1720,7 @@ enum Restorationspecspells
     INTESITY                    = 81052,
     TRANQUIL_SPIRIT             = 81053,
     GIFT_OF_NATURE              = 81054,
+    NATURES_SPELNDOR            = 81059,
 };
 
 // 81036 Restoration Specialization
@@ -1748,7 +1749,7 @@ public:
 
             caster->learnSpell(RESTORATION_SPECIALIZATION, false);
             caster->learnSpell(SWIFTMEND, false);
-            caster->learnSpell(NATURALIST, false);
+            caster->learnSpell(NATURES_SPELNDOR, false);
             caster->learnSpell(NATURES_FOCUS, false);
         }
 
@@ -1766,6 +1767,7 @@ public:
             caster->removeSpell(TRANQUIL_SPIRIT, SPEC_MASK_ALL, false);
             caster->removeSpell(GIFT_OF_NATURE, SPEC_MASK_ALL, false);
             caster->removeSpell(NATURES_SWIFTNESS, SPEC_MASK_ALL, false);
+            caster->removeSpell(NATURES_SPELNDOR, SPEC_MASK_ALL, false);
         }
 
         void Register() override

@@ -1694,6 +1694,12 @@ public:
             caster->removeSpell(SAVAGE_STRIKES, SPEC_MASK_ALL, false);
             caster->removeSpell(IMPROVED_STINGS, SPEC_MASK_ALL, false);
             caster->removeSpell(TRAP_MASTERY, SPEC_MASK_ALL, false);
+            caster->removeSpell(ASPECT_OF_THE_BEAST_SURVIVAL, SPEC_MASK_ALL, false);
+            caster->removeSpell(ASPECT_OF_THE_MONEKY_SURVIVAL, SPEC_MASK_ALL, false);
+            caster->removeSpell(WING_CLIP, SPEC_MASK_ALL, false);
+            caster->removeSpell(EYES_OF_THE_BEAST_SURVIVAL, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMMOLATION_TRAP, SPEC_MASK_ALL, false);
+            caster->removeSpell(MONGOOSE_BITE, SPEC_MASK_ALL, false);
         }
 
         void Register() override
@@ -1726,13 +1732,13 @@ public:
 
         void HandleDummy(SpellEffIndex /*effIndex*/)
         {
-            int32 damage = GetEffectValue();
+            int32 damage = GetEffectValue() + (GetCaster()->GetTotalAttackPowerValue(BASE_ATTACK) * 0.05);
             GetHitUnit()->CastDelayedSpellWithPeriodicAmount(GetCaster(), CARVE_DOT, SPELL_AURA_PERIODIC_DAMAGE, damage);
         }
 
         void Register() override
         {
-            OnEffectHit += SpellEffectFn(spell_hun_carve_SpellScript::HandleDummy, EFFECT_1, SPELL_EFFECT_DUMMY);
+            OnEffectHitTarget += SpellEffectFn(spell_hun_carve_SpellScript::HandleDummy, EFFECT_1, SPELL_EFFECT_DUMMY);
         }
     };
 

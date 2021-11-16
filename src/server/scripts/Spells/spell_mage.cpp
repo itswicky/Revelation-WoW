@@ -889,6 +889,8 @@ public:
 
             SpellInfo const* igniteDot = sSpellMgr->AssertSpellInfo(SPELL_MAGE_IGNITE);
             int32 pct = 8 * GetSpellInfo()->GetRank();
+            if (pct == 0)
+                pct == 40; // override for custom Ignite spell
 
             int32 amount = int32(CalculatePct(eventInfo.GetDamageInfo()->GetDamage(), pct) / igniteDot->GetMaxTicks());
 
@@ -1256,7 +1258,7 @@ enum Firespecspells
 {
     FIRE_SPECIALIZATION     = 83003,
     PYROBLAST               = 83012,
-    IMPROVED_FIREBALL       = 83012,
+    IMPROVED_FIREBALL       = 83014,
     IGNITE                  = 83015,
     BURNING_SOUL            = 83016,
     INCINERATION            = 83017,

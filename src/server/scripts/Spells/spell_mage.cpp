@@ -889,8 +889,6 @@ public:
 
             SpellInfo const* igniteDot = sSpellMgr->AssertSpellInfo(SPELL_MAGE_IGNITE);
             int32 pct = 8 * GetSpellInfo()->GetRank();
-            if (GetCaster()->HasAura(83015))
-                pct == 40; // override for custom Ignite spell
 
             int32 amount = int32(CalculatePct(eventInfo.GetDamageInfo()->GetDamage(), pct) / igniteDot->GetMaxTicks());
 
@@ -909,6 +907,72 @@ public:
     AuraScript* GetAuraScript() const override
     {
         return new spell_mage_ignite_AuraScript();
+    }
+};
+
+// 83015 - Custom Ignite
+class spell_mage_custom_ignite : public SpellScriptLoader
+{
+public:
+    spell_mage_custom_ignite() : SpellScriptLoader("spell_mage_custom_ignite") {}
+
+    class spell_mage_custom_ignite_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_mage_custom_ignite_AuraScript);
+
+        bool Validate(SpellInfo const* /*spellInfo*/) override
+        {
+            return ValidateSpellInfo({SPELL_MAGE_IGNITE});
+        }
+
+        bool CheckProc(ProcEventInfo& eventInfo)
+        {
+            if (!eventInfo.GetActor() || !eventInfo.GetProcTarget())
+                return false;
+
+            DamageInfo* damageInfo = eventInfo.GetDamageInfo();
+
+            if (!damageInfo || !damageInfo->GetSpellInfo())
+            {
+                return false;
+            }
+
+            // Molten Armor
+            if (SpellInfo const* spellInfo = eventInfo.GetSpellInfo())
+            {
+                if (spellInfo->SpellFamilyFlags[1] & 0x8)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        void HandleProc(AuraEffect const* /*aurEff*/, ProcEventInfo& eventInfo)
+        {
+            PreventDefaultAction();
+
+            SpellInfo const* igniteDot = sSpellMgr->AssertSpellInfo(SPELL_MAGE_IGNITE);
+            int32 pct = 40;
+
+            int32 amount = int32(CalculatePct(eventInfo.GetDamageInfo()->GetDamage(), pct) / igniteDot->GetMaxTicks());
+
+            // Xinef: implement ignite bug
+            eventInfo.GetProcTarget()->CastDelayedSpellWithPeriodicAmount(eventInfo.GetActor(), SPELL_MAGE_IGNITE, SPELL_AURA_PERIODIC_DAMAGE, amount);
+            // GetTarget()->CastCustomSpell(SPELL_MAGE_IGNITE, SPELLVALUE_BASE_POINT0, amount, eventInfo.GetProcTarget(), true, nullptr, aurEff);
+        }
+
+        void Register() override
+        {
+            DoCheckProc += AuraCheckProcFn(spell_mage_custom_ignite_AuraScript::CheckProc);
+            OnEffectProc += AuraEffectProcFn(spell_mage_custom_ignite_AuraScript::HandleProc, EFFECT_0, SPELL_AURA_DUMMY);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_mage_custom_ignite_AuraScript();
     }
 };
 
@@ -1398,6 +1462,31 @@ public:
     }
 };
 
+// 83010 - Custom Missile Barrage
+class spell_mage_missile_barrage : public AuraScript
+{
+    PrepareAuraScript(spell_mage_missile_barrage);
+
+    bool CheckProc(ProcEventInfo& eventInfo)
+    {
+        SpellInfo const* spellInfo = eventInfo.GetSpellInfo();
+        if (!spellInfo)
+            return false;
+
+        // Arcane Blast - full chance
+        if (spellInfo->SpellFamilyFlags[0] & 0x20000000)
+            return true;
+
+        // Rest of spells have half chance
+        return roll_chance_i(50);
+    }
+
+    void Register() override
+    {
+        DoCheckProc += AuraCheckProcFn(spell_mage_missile_barrage::CheckProc);
+    }
+};
+
 void AddSC_mage_spell_scripts()
 {
     // Ours
@@ -1415,6 +1504,7 @@ void AddSC_mage_spell_scripts()
     new spell_mage_arcane_spec();
     new spell_mage_fire_spec();
     new spell_mage_frost_spec();
+    new spell_mage_custom_ignite();
 
     // Theirs
     new spell_mage_blast_wave();
@@ -1428,4 +1518,5 @@ void AddSC_mage_spell_scripts()
     new spell_mage_master_of_elements();
     new spell_mage_polymorph_cast_visual();
     new spell_mage_summon_water_elemental();
+    new spell_mage_missile_barrage();
 }

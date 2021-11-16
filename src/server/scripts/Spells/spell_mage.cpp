@@ -1462,28 +1462,44 @@ public:
     }
 };
 
-// 83010 - Custom Missile Barrage
-class spell_mage_missile_barrage : public AuraScript
+// 83010 - Missile Barrage
+class spell_mage_missile_barrage : public SpellScriptLoader
 {
-    PrepareAuraScript(spell_mage_missile_barrage);
+public:
+    spell_mage_missile_barrage() : SpellScriptLoader("spell_mage_missile_barrage") {}
 
-    bool CheckProc(ProcEventInfo& eventInfo)
+    class spell_mage_missile_barrage_AuraScript : public AuraScript
     {
-        SpellInfo const* spellInfo = eventInfo.GetSpellInfo();
-        if (!spellInfo)
-            return false;
+        PrepareAuraScript(spell_mage_missile_barrage_AuraScript);
 
-        // Arcane Blast - full chance
-        if (spellInfo->SpellFamilyFlags[0] & 0x20000000)
-            return true;
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
 
-        // Rest of spells have half chance
-        return roll_chance_i(50);
-    }
+        bool CheckProc(ProcEventInfo& eventInfo)
+        {
+            SpellInfo const* spellInfo = eventInfo.GetSpellInfo();
+            if (!spellInfo)
+                return false;
 
-    void Register() override
+            // Arcane Blast - full chance
+            if (!spellInfo->SpellFamilyFlags[0] && 0x20000000)
+                if (roll_chance_f(50))
+                    return false;
+            else
+                return true;
+        }
+
+        void Register() override
+        {
+            DoCheckProc += AuraCheckProcFn(spell_mage_missile_barrage_AuraScript::CheckProc);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
     {
-        DoCheckProc += AuraCheckProcFn(spell_mage_missile_barrage::CheckProc);
+        return new spell_mage_missile_barrage_AuraScript();
     }
 };
 

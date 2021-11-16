@@ -1472,11 +1472,6 @@ public:
     {
         PrepareAuraScript(spell_mage_missile_barrage_AuraScript);
 
-        bool Load() override
-        {
-            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
-        }
-
         bool CheckProc(ProcEventInfo& eventInfo)
         {
             SpellInfo const* spellInfo = eventInfo.GetSpellInfo();
@@ -1484,11 +1479,11 @@ public:
                 return false;
 
             // Arcane Blast - full chance
-            if (!spellInfo->SpellFamilyFlags[0] && 0x20000000)
-                if (roll_chance_f(50))
-                    return false;
-            else
+            if (spellInfo->SpellFamilyFlags[0] & 0x20000000)
                 return true;
+
+            // Rest of spells have half chance
+            return roll_chance_i(50);
         }
 
         void Register() override

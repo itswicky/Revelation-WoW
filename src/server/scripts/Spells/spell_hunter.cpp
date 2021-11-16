@@ -1748,6 +1748,45 @@ public:
     }
 };
 
+// Kill Command
+class spell_hun_kill_command : public SpellScriptLoader
+{
+public:
+    spell_hun_kill_command() : SpellScriptLoader("spell_hun_kill_command") {}
+
+    class spell_hun_kill_command_SpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_hun_kill_command_SpellScript);
+
+        bool Validate(SpellInfo const* /*spellInfo*/) override
+        {
+            return ValidateSpellInfo({KILL_COMMAND});
+        }
+
+        void HandleDummy(SpellEffIndex /*effIndex*/)
+        {
+            Unit* caster = GetCaster();
+            if (!caster)
+                return;
+
+            Unit* target = GetHitUnit();
+            Pet*  pet    = caster->ToPlayer()->GetPet();
+
+            pet->CastSpell(target, 82013, true);
+        }
+
+        void Register() override
+        {
+            OnEffectHitTarget += SpellEffectFn(spell_hun_kill_command_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+        }
+    };
+
+    SpellScript* GetSpellScript() const override
+    {
+        return new spell_hun_kill_command_SpellScript();
+    }
+};
+
 void AddSC_hunter_spell_scripts()
 {
     // Ours
@@ -1762,6 +1801,7 @@ void AddSC_hunter_spell_scripts()
     new spell_hun_marksmanship_spec();
     new spell_hun_survival_spec();
     new spell_hun_carve();
+    new spell_hun_kill_command();
 
     // Theirs
     new spell_hun_aspect_of_the_beast();

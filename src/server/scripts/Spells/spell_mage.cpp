@@ -1176,6 +1176,226 @@ public:
     }
 };
 
+enum Arcanespecspells
+{
+    ARCANE_SPECIALIZATION           = 83001,
+    MAGE_ARMOR                      = 83006,
+    ARCANE_BLAST                    = 83007,
+    ARCANE_CONCENTRATION            = 83008,
+    ARCANE_MEDITATION               = 83009,
+    MISSILE_BARRAGE                 = 83010,
+    DAMPEN_MAGIC                    = 604,
+    AMPLIFY_MAGIC                   = 1008,
+    MANA_SHIELD                     = 1463,
+    EVOCATION                       = 12051,
+    ARCANE_EXPLOSION                = 1449,
+};
+
+// 83000 Arcane Specialization
+class spell_mage_arcane_spec : public SpellScriptLoader
+{
+public:
+    spell_mage_arcane_spec() : SpellScriptLoader("spell_mage_arcane_spec") {}
+
+    class spell_mage_arcane_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_mage_arcane_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(ARCANE_BLAST))
+                return;
+
+            caster->learnSpell(ARCANE_BLAST, false);
+            caster->learnSpell(MISSILE_BARRAGE, false);
+            caster->learnSpell(ARCANE_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(ARCANE_BLAST, SPEC_MASK_ALL, false);
+            caster->removeSpell(MISSILE_BARRAGE, SPEC_MASK_ALL, false);
+            caster->removeSpell(ARCANE_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(MAGE_ARMOR, SPEC_MASK_ALL, false);
+            caster->removeSpell(ARCANE_CONCENTRATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(ARCANE_MEDITATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(DAMPEN_MAGIC, SPEC_MASK_ALL, false);
+            caster->removeSpell(AMPLIFY_MAGIC, SPEC_MASK_ALL, false);
+            caster->removeSpell(MANA_SHIELD, SPEC_MASK_ALL, false);
+            caster->removeSpell(EVOCATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(ARCANE_EXPLOSION, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_mage_arcane_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_mage_arcane_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_mage_arcane_spec_AuraScript();
+    }
+};
+
+enum Firespecspells
+{
+    FIRE_SPECIALIZATION     = 83003,
+    PYROBLAST               = 83012,
+    IMPROVED_FIREBALL       = 83012,
+    IGNITE                  = 83015,
+    BURNING_SOUL            = 83016,
+    INCINERATION            = 83017,
+    IMPROVED_FIRE_BLAST     = 83018,
+    FLAMESTRIKE             = 2120,
+    FIRE_WARD               = 543,
+    MOLTEN_ARMOR            = 83025,
+};
+
+// 83002 Fire Specialization
+class spell_mage_fire_spec : public SpellScriptLoader
+{
+public:
+    spell_mage_fire_spec() : SpellScriptLoader("spell_mage_fire_spec") {}
+
+    class spell_mage_fire_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_mage_fire_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(PYROBLAST))
+                return;
+
+            caster->learnSpell(PYROBLAST, false);
+            caster->learnSpell(IGNITE, false);
+            caster->learnSpell(FIRE_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(PYROBLAST, SPEC_MASK_ALL, false);
+            caster->removeSpell(IGNITE, SPEC_MASK_ALL, false);
+            caster->removeSpell(FIRE_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_FIREBALL, SPEC_MASK_ALL, false);
+            caster->removeSpell(BURNING_SOUL, SPEC_MASK_ALL, false);
+            caster->removeSpell(INCINERATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_FIRE_BLAST, SPEC_MASK_ALL, false);
+            caster->removeSpell(FLAMESTRIKE, SPEC_MASK_ALL, false);
+            caster->removeSpell(FIRE_WARD, SPEC_MASK_ALL, false);
+            caster->removeSpell(MOLTEN_ARMOR, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_mage_fire_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_mage_fire_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_mage_fire_spec_AuraScript();
+    }
+};
+
+enum Frostspecspells
+{
+    FROST_SPECIALIZATION    = 83005,
+    ICE_LANCE               = 83019,
+    FINGERS_OF_FROST        = 83022,
+    IMPROVED_FROSTBOLT      = 83021,
+    ICE_SHARDS              = 83023,
+    BLIZZARD                = 10,
+    ICY_VEINS               = 12472,
+    FROST_WARD              = 6143,
+};
+
+// 83004 Frost Specialization
+class spell_mage_frost_spec : public SpellScriptLoader
+{
+public:
+    spell_mage_frost_spec() : SpellScriptLoader("spell_mage_frost_spec") {}
+
+    class spell_mage_frost_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_mage_frost_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(ICE_LANCE))
+                return;
+
+            caster->learnSpell(ICE_LANCE, false);
+            caster->learnSpell(FINGERS_OF_FROST, false);
+            caster->learnSpell(FROST_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(ICE_LANCE, SPEC_MASK_ALL, false);
+            caster->removeSpell(FINGERS_OF_FROST, SPEC_MASK_ALL, false);
+            caster->removeSpell(FROST_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_FROSTBOLT, SPEC_MASK_ALL, false);
+            caster->removeSpell(ICE_SHARDS, SPEC_MASK_ALL, false);
+            caster->removeSpell(BLIZZARD, SPEC_MASK_ALL, false);
+            caster->removeSpell(ICY_VEINS, SPEC_MASK_ALL, false);
+            caster->removeSpell(FROST_WARD, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_mage_frost_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_mage_frost_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_mage_frost_spec_AuraScript();
+    }
+};
+
 void AddSC_mage_spell_scripts()
 {
     // Ours
@@ -1190,6 +1410,9 @@ void AddSC_mage_spell_scripts()
     new spell_mage_brain_freeze();
     new spell_mage_glyph_of_eternal_water();
     new spell_mage_combustion_proc();
+    new spell_mage_arcane_spec();
+    new spell_mage_fire_spec();
+    new spell_mage_frost_spec();
 
     // Theirs
     new spell_mage_blast_wave();

@@ -889,7 +889,7 @@ public:
 
             SpellInfo const* igniteDot = sSpellMgr->AssertSpellInfo(SPELL_MAGE_IGNITE);
             int32 pct = 8 * GetSpellInfo()->GetRank();
-            if (pct == 0)
+            if (GetCaster()->HasAura(83015))
                 pct == 40; // override for custom Ignite spell
 
             int32 amount = int32(CalculatePct(eventInfo.GetDamageInfo()->GetDamage(), pct) / igniteDot->GetMaxTicks());

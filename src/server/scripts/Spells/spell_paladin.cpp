@@ -1411,6 +1411,7 @@ enum Protectionspecspells
     SPIRITUAL_ATTUNEMENT        = 84019,
     IMPROVED_DEVOTION_AURA      = 84020,
     RETRIBUTION_AURA_PROTECTION = 7294,
+    RIGHTEOUS_DEFENSE           = 31789,
 };
 
 // 84002 Protection Specialization
@@ -1455,6 +1456,7 @@ public:
             caster->removeSpell(SPIRITUAL_ATTUNEMENT, SPEC_MASK_ALL, false);
             caster->removeSpell(IMPROVED_DEVOTION_AURA, SPEC_MASK_ALL, false);
             caster->removeSpell(RETRIBUTION_AURA_PROTECTION, SPEC_MASK_ALL, false);
+            caster->removeSpell(RIGHTEOUS_DEFENSE, SPEC_MASK_ALL, false);
         }
 
         void Register() override

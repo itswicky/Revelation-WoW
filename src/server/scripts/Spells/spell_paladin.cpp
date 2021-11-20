@@ -1333,6 +1333,8 @@ public:
     }
 };
 
+
+
 void AddSC_paladin_spell_scripts()
 {
     // Ours

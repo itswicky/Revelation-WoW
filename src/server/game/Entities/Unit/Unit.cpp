@@ -8715,8 +8715,10 @@ bool Unit::HandleProcTriggerSpell(Unit* victim, uint32 damage, AuraEffect* trigg
                                             break;
                                         case 84011:
                                             originalSpellId = 84009;
+                                            break;
                                         case 84014:
                                             originalSpellId = 84012;
+                                            break;
                                         default:
                                             LOG_ERROR("entities.unit", "Unit::HandleProcTriggerSpell: Spell %u not handled in HShock", procSpell->Id);
                                             return false;

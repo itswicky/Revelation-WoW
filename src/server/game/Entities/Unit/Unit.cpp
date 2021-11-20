@@ -7320,6 +7320,7 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                     // Spiritual Attunement
                     case 31785:
                     case 33776:
+                    case 84019:
                         {
                             // if healed by another unit (victim)
                             if (this == victim)

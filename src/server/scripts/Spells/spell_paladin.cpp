@@ -1333,6 +1333,211 @@ public:
     }
 };
 
+enum Holyspecspells
+{
+    HOLY_SPECIALIZATION     = 84001,
+    SPIRITUAL_FOCUS         = 84006,
+    ILLUMINATION            = 84007,
+    HOLY_POWER              = 84008,
+    HOLY_SHOCK              = 84009,
+    INFUSION_OF_LIGHT       = 84025,
+    AURA_MASTERY            = 31821,
+};
+
+// 84000 Holy Specialization
+class spell_pal_holy_spec : public SpellScriptLoader
+{
+public:
+    spell_pal_holy_spec() : SpellScriptLoader("spell_pal_holy_spec") {}
+
+    class spell_pal_holy_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_pal_holy_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(HOLY_SHOCK))
+                return;
+
+            caster->learnSpell(HOLY_SHOCK, false);
+            caster->learnSpell(SPIRITUAL_FOCUS, false);
+            caster->learnSpell(HOLY_SPECIALIZATION, false);
+            caster->learnSpell(ILLUMINATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(HOLY_SHOCK, SPEC_MASK_ALL, false);
+            caster->removeSpell(SPIRITUAL_FOCUS, SPEC_MASK_ALL, false);
+            caster->removeSpell(HOLY_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(ILLUMINATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(HOLY_POWER, SPEC_MASK_ALL, false);
+            caster->removeSpell(INFUSION_OF_LIGHT, SPEC_MASK_ALL, false);
+            caster->removeSpell(AURA_MASTERY, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_pal_holy_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_pal_holy_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_pal_holy_spec_AuraScript();
+    }
+};
+
+enum Protectionspecspells
+{
+    PROTECTION_SPECIALIZATION   = 84003,
+    AVENGERS_SHIELD             = 84015,
+    SHIELD_OF_RIGHTEOUSNESS     = 84017,
+    REDOUBT                     = 84018,
+    SPIRITUAL_ATTUNEMENT        = 84019,
+    IMPROVED_DEVOTION_AURA      = 84020,
+    RETRIBUTION_AURA_PROTECTION = 7294,
+};
+
+// 84002 Protection Specialization
+class spell_pal_protection_spec : public SpellScriptLoader
+{
+public:
+    spell_pal_protection_spec() : SpellScriptLoader("spell_pal_protection_spec") {}
+
+    class spell_pal_protection_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_pal_protection_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(AVENGERS_SHIELD))
+                return;
+
+            caster->learnSpell(AVENGERS_SHIELD, false);
+            caster->learnSpell(REDOUBT, false);
+            caster->learnSpell(PROTECTION_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(AVENGERS_SHIELD, SPEC_MASK_ALL, false);
+            caster->removeSpell(REDOUBT, SPEC_MASK_ALL, false);
+            caster->removeSpell(PROTECTION_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(SHIELD_OF_RIGHTEOUSNESS, SPEC_MASK_ALL, false);
+            caster->removeSpell(SPIRITUAL_ATTUNEMENT, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_DEVOTION_AURA, SPEC_MASK_ALL, false);
+            caster->removeSpell(RETRIBUTION_AURA_PROTECTION, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_pal_protection_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_pal_protection_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_pal_protection_spec_AuraScript();
+    }
+};
+
+enum Retributionspecspells
+{
+    RETRIBUTION_SPECIALIZATION  = 84005,
+    CRUSADER_STRIKE             = 35395,
+    IMPROVED_JUDGEMENTS         = 84023,
+    SEAL_OF_COMMAND             = 20375,
+    RETRIBUTION_AURA_RET        = 84021,
+    JUDGEMENTS_OF_THE_WISE      = 84022,
+    CONVICTION                  = 84024,
+};
+
+// 84004 Retribution Specialization
+class spell_pal_retribution_spec : public SpellScriptLoader
+{
+public:
+    spell_pal_retribution_spec() : SpellScriptLoader("spell_pal_retribution_spec") {}
+
+    class spell_pal_retribution_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_pal_retribution_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(CRUSADER_STRIKE))
+                return;
+
+            caster->learnSpell(CRUSADER_STRIKE, false);
+            caster->learnSpell(IMPROVED_JUDGEMENTS, false);
+            caster->learnSpell(RETRIBUTION_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(CRUSADER_STRIKE, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_JUDGEMENTS, SPEC_MASK_ALL, false);
+            caster->removeSpell(RETRIBUTION_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(SEAL_OF_COMMAND, SPEC_MASK_ALL, false);
+            caster->removeSpell(RETRIBUTION_AURA_RET, SPEC_MASK_ALL, false);
+            caster->removeSpell(JUDGEMENTS_OF_THE_WISE, SPEC_MASK_ALL, false);
+            caster->removeSpell(CONVICTION, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_pal_retribution_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_pal_retribution_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_pal_retribution_spec_AuraScript();
+    }
+};
+
 void AddSC_paladin_spell_scripts()
 {
     // Ours
@@ -1340,6 +1545,9 @@ void AddSC_paladin_spell_scripts()
     new spell_pal_divine_intervention();
     new spell_pal_seal_of_light();
     new spell_pal_sacred_shield_base();
+    new spell_pal_holy_spec();
+    new spell_pal_protection_spec();
+    new spell_pal_retribution_spec();
 
     // Theirs
     new spell_pal_ardent_defender();

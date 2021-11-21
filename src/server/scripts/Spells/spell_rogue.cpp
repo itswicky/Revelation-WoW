@@ -42,6 +42,7 @@ enum RogueSpells
     SPELL_ROGUE_TRICKS_OF_THE_TRADE_DMG_BOOST   = 57933,
     SPELL_ROGUE_TRICKS_OF_THE_TRADE_PROC        = 59628,
     SPELL_ROGUE_DEFT_STRIKE_DUMMY               = 86030,
+    SPELL_ROGUE_SHADOW_STRIKE_PROC              = 86033,
 };
 
 // Ours
@@ -835,12 +836,257 @@ public:
     }
 };
 
+enum Assassinationspecspells
+{
+    ASSASSINATION_SPECIALIZATION    = 86001,
+    MUTILATE                        = 86006,
+    OVERKILL                        = 86012,
+    PUNCTURING_WOUNDS               = 86014,
+    IMPROVED_POISONS                = 86016,
+    BLOOD_SPATTER                   = 86020,
+};
+
+// 86000 Assassination Specialization
+class spell_rogue_assassination_spec : public SpellScriptLoader
+{
+public:
+    spell_rogue_assassination_spec() : SpellScriptLoader("spell_rogue_assassination_spec") {}
+
+    class spell_rogue_assassination_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_rogue_assassination_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(MUTILATE))
+                return;
+
+            caster->learnSpell(MUTILATE, false);
+            caster->learnSpell(OVERKILL, false);
+            caster->learnSpell(ASSASSINATION_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(MUTILATE, SPEC_MASK_ALL, false);
+            caster->removeSpell(OVERKILL, SPEC_MASK_ALL, false);
+            caster->removeSpell(ASSASSINATION_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(PUNCTURING_WOUNDS, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_POISONS, SPEC_MASK_ALL, false);
+            caster->removeSpell(BLOOD_SPATTER, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_rogue_assassination_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_rogue_assassination_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_rogue_assassination_spec_AuraScript();
+    }
+};
+
+enum Combatspecspells
+{
+    COMBAT_SPECIALIZATION       = 86003,
+    DEFT_STRIKE                 = 86029,
+    VITALITY                    = 86023,
+    IMPROVED_SINISTER_STRIKE    = 86022,
+    IMPROVED_EVISCERATE         = 86024,
+    WEAPON_EXPERTISE            = 86025,
+};
+
+// 86002 Combat Specialization
+class spell_rogue_combat_spec : public SpellScriptLoader
+{
+public:
+    spell_rogue_combat_spec() : SpellScriptLoader("spell_rogue_combat_spec") {}
+
+    class spell_rogue_combat_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_rogue_combat_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(DEFT_STRIKE))
+                return;
+
+            caster->learnSpell(DEFT_STRIKE, false);
+            caster->learnSpell(VITALITY, false);
+            caster->learnSpell(COMBAT_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(DEFT_STRIKE, SPEC_MASK_ALL, false);
+            caster->removeSpell(VITALITY, SPEC_MASK_ALL, false);
+            caster->removeSpell(COMBAT_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_SINISTER_STRIKE, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_EVISCERATE, SPEC_MASK_ALL, false);
+            caster->removeSpell(WEAPON_EXPERTISE, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_rogue_combat_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_rogue_combat_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_rogue_combat_spec_AuraScript();
+    }
+};
+
+enum Subtletyspecspells
+{
+    SUBTLETY_SPECIALIZATION     = 86005,
+    SHADOW_DANCE                = 86031,
+    SLAUGHTER_FROM_THE_SHADOWS  = 86026,
+    RELENTLESS_STRIKES          = 86027,
+    INITIATIVE                  = 86028,
+    PREMEDITATION               = 14183,
+};
+
+// 86004 Subtlety Specialization
+class spell_rogue_subtlety_spec : public SpellScriptLoader
+{
+public:
+    spell_rogue_subtlety_spec() : SpellScriptLoader("spell_rogue_subtlety_spec") {}
+
+    class spell_rogue_subtlety_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_rogue_subtlety_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(SHADOW_DANCE))
+                return;
+
+            caster->learnSpell(SHADOW_DANCE, false);
+            caster->learnSpell(SLAUGHTER_FROM_THE_SHADOWS, false);
+            caster->learnSpell(SUBTLETY_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(SHADOW_DANCE, SPEC_MASK_ALL, false);
+            caster->removeSpell(SLAUGHTER_FROM_THE_SHADOWS, SPEC_MASK_ALL, false);
+            caster->removeSpell(SUBTLETY_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(RELENTLESS_STRIKES, SPEC_MASK_ALL, false);
+            caster->removeSpell(INITIATIVE, SPEC_MASK_ALL, false);
+            caster->removeSpell(PREMEDITATION, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_rogue_subtlety_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_rogue_subtlety_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_rogue_subtlety_spec_AuraScript();
+    }
+};
+
+// 86032 Shadow Strike - Custom Shadow Dance component
+class spell_rogue_shadow_strike : public SpellScriptLoader
+{
+public:
+    spell_rogue_shadow_strike() : SpellScriptLoader("spell_rogue_shadow_strike") {}
+
+    class spell_rogue_shadow_strike_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_rogue_shadow_strike_AuraScript);
+
+        bool Validate(SpellInfo const* /*spellInfo*/) override
+        {
+            if (!sSpellMgr->GetSpellInfo(SPELL_ROGUE_SHADOW_STRIKE_PROC))
+                return false;
+            return true;
+        }
+
+        void HandleProc(AuraEffect const* aurEff, ProcEventInfo& eventInfo)
+        {
+            PreventDefaultAction();
+            Unit* caster = eventInfo.GetActor();
+
+            DamageInfo* damageInfo = eventInfo.GetDamageInfo();
+            if (!damageInfo || !damageInfo->GetDamage() || !damageInfo->GetVictim())
+                return;
+
+            int32 amount = CalculatePct(static_cast<int32>(damageInfo->GetDamage()), 10); // update to check spell effect_0 value at some point
+
+            caster->CastCustomSpell(SPELL_ROGUE_SHADOW_STRIKE_PROC, SPELLVALUE_BASE_POINT0, amount, damageInfo->GetVictim(), true, nullptr, aurEff);
+        }
+
+        void Register() override
+        {
+            OnEffectProc += AuraEffectProcFn(spell_rogue_shadow_strike_AuraScript::HandleProc, EFFECT_0, SPELL_AURA_DUMMY);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_rogue_shadow_strike_AuraScript();
+    }
+};
+
 void AddSC_rogue_spell_scripts()
 {
     // Ours
     new spell_rog_savage_combat();
     new spell_rog_combat_potency();
     new spell_rogue_deft_strike();
+    new spell_rogue_assassination_spec();
+    new spell_rogue_combat_spec();
+    new spell_rogue_subtlety_spec();
+    new spell_rogue_shadow_strike();
 
     // Theirs
     new spell_rog_blade_flurry();

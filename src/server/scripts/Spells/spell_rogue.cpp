@@ -841,7 +841,7 @@ enum Assassinationspecspells
     ASSASSINATION_SPECIALIZATION    = 86001,
     MUTILATE                        = 86006,
     OVERKILL                        = 86012,
-    PUNCTURING_WOUNDS               = 86014,
+    PUNCTURING_WOUNDS               = 86015,
     IMPROVED_POISONS                = 86016,
     BLOOD_SPATTER                   = 86020,
 };

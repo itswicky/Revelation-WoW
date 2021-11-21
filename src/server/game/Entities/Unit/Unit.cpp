@@ -5973,10 +5973,16 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
             {
                 switch (dummySpell->Id)
                 {
-                    // Overkill
+                    // Overkill R2
                     case 58426:
                         {
                             triggered_spell_id = 58427;
+                            break;
+                        }
+                    // Overkill R1
+                    case 86012:
+                        {
+                            triggered_spell_id = 86013;
                             break;
                         }
                     // Unstable Power

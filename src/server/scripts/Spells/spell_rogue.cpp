@@ -803,8 +803,7 @@ public:
 };
 
 // 86029 - Deft Strike
-// Implement as player state check in future
-class spell_rogue_deft_strike : public SpellScriptLoader
+/* class spell_rogue_deft_strike : public SpellScriptLoader
 {
 public:
     spell_rogue_deft_strike() : SpellScriptLoader("spell_rogue_deft_strike") {}
@@ -834,7 +833,7 @@ public:
     {
         return new spell_rogue_deft_strike_SpellScript();
     }
-};
+};*/
 
 enum Assassinationspecspells
 {
@@ -1082,7 +1081,7 @@ void AddSC_rogue_spell_scripts()
     // Ours
     new spell_rog_savage_combat();
     new spell_rog_combat_potency();
-    new spell_rogue_deft_strike();
+    //new spell_rogue_deft_strike();
     new spell_rogue_assassination_spec();
     new spell_rogue_combat_spec();
     new spell_rogue_subtlety_spec();

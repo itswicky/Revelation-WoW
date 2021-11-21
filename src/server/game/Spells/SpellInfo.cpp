@@ -2048,6 +2048,10 @@ AuraStateType SpellInfo::LoadAuraState() const
     if (GetAllEffectsMechanicMask() & 1 << MECHANIC_BLEED)
         return AURA_STATE_BLEEDING;
 
+    // Deft Strike state
+    if (SpellFamilyName == SPELLFAMILY_ROGUE && SpellFamilyFlags[2] & 0x4)
+        return AURA_STATE_DEFT_STRIKE;
+
     if (GetSchoolMask() & SPELL_SCHOOL_MASK_FROST)
         for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
             if (Effects[i].IsAura() && (Effects[i].ApplyAuraName == SPELL_AURA_MOD_STUN

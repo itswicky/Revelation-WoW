@@ -41,6 +41,7 @@ enum RogueSpells
     SPELL_ROGUE_SHIV_TRIGGERED                  = 5940,
     SPELL_ROGUE_TRICKS_OF_THE_TRADE_DMG_BOOST   = 57933,
     SPELL_ROGUE_TRICKS_OF_THE_TRADE_PROC        = 59628,
+    SPELL_ROGUE_DEFT_STRIKE_DUMMY               = 86030,
 };
 
 // Ours
@@ -800,11 +801,46 @@ public:
     }
 };
 
+// 86029 - Deft Strike
+// Implement as player state check in future
+class spell_rogue_deft_strike : public SpellScriptLoader
+{
+public:
+    spell_rogue_deft_strike() : SpellScriptLoader("spell_rogue_deft_strike") {}
+
+    class spell_rogue_deft_strike_SpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_rogue_deft_strike_SpellScript);
+
+        SpellCastResult CheckCast()
+        {
+            if (!GetCaster()->HasAura(SPELL_ROGUE_DEFT_STRIKE_DUMMY))
+            {
+                GetCaster()->ToPlayer()->GetSession()->SendNotification("You have not used Sinister Strike in the last 4 sec.");
+                return SPELL_FAILED_DONT_REPORT;
+            }               
+
+            return SPELL_CAST_OK;
+        }
+
+        void Register() override
+        {
+            OnCheckCast += SpellCheckCastFn(spell_rogue_deft_strike_SpellScript::CheckCast);
+        }
+    };
+
+    SpellScript* GetSpellScript() const override
+    {
+        return new spell_rogue_deft_strike_SpellScript();
+    }
+};
+
 void AddSC_rogue_spell_scripts()
 {
     // Ours
     new spell_rog_savage_combat();
     new spell_rog_combat_potency();
+    new spell_rogue_deft_strike();
 
     // Theirs
     new spell_rog_blade_flurry();

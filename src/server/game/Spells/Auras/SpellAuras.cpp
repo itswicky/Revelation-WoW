@@ -1748,7 +1748,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                         if (caster->GetDummyAuraEffect(SPELLFAMILY_ROGUE, 2114, 0))
                             caster->CastSpell(caster, 31666, true);
 
-                        if (caster->GetAuraEffectDummy(58426))
+                        if (caster->GetAuraEffectDummy(58426) || caster->GetAuraEffectDummy(86012))
                             caster->CastSpell(caster, 58428, true);
                     }
                     // Remove Vanish on stealth remove

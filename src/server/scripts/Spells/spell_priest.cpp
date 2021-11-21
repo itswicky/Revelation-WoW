@@ -37,9 +37,9 @@ enum PriestSpells
     SPELL_PRIEST_GUARDIAN_SPIRIT_HEAL               = 48153,
     SPELL_PRIEST_ITEM_EFFICIENCY                    = 37595,
     SPELL_PRIEST_MANA_LEECH_PROC                    = 34650,
-    SPELL_PRIEST_PENANCE_R1                         = 47540,
-    SPELL_PRIEST_PENANCE_R1_DAMAGE                  = 47758,
-    SPELL_PRIEST_PENANCE_R1_HEAL                    = 47757,
+    SPELL_PRIEST_PENANCE_R1                         = 85011,
+    SPELL_PRIEST_PENANCE_R1_DAMAGE                  = 85015,
+    SPELL_PRIEST_PENANCE_R1_HEAL                    = 85014,
     SPELL_PRIEST_REFLECTIVE_SHIELD_TRIGGERED        = 33619,
     SPELL_PRIEST_REFLECTIVE_SHIELD_R1               = 33201,
     SPELL_PRIEST_SHADOW_WORD_DEATH                  = 32409,
@@ -986,10 +986,256 @@ public:
     }
 };
 
+enum Disciplinespecspells
+{
+    DISCIPLINE_SPECIALIZATION   = 85001,
+    PENANCE                     = 85011,
+    GRACE                       = 85010,
+    MEDITATION_DISCIPLINE       = 85009,
+    DIVINE_FURY_DISCIPLINE      = 85024,
+    MIND_BLAST_DISCIPLINE       = 85007,
+    INNER_FOCUS                 = 85006,
+};
+
+// 85000 Discipline Specialization
+class spell_pri_discipline_spec : public SpellScriptLoader
+{
+public:
+    spell_pri_discipline_spec() : SpellScriptLoader("spell_pri_discipline_spec") {}
+
+    class spell_pri_discipline_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_pri_discipline_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(PENANCE))
+                return;
+
+            caster->learnSpell(PENANCE, false);
+            caster->learnSpell(GRACE, false);
+            caster->learnSpell(DISCIPLINE_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(PENANCE, SPEC_MASK_ALL, false);
+            caster->removeSpell(GRACE, SPEC_MASK_ALL, false);
+            caster->removeSpell(DISCIPLINE_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(MEDITATION_DISCIPLINE, SPEC_MASK_ALL, false);
+            caster->removeSpell(DIVINE_FURY_DISCIPLINE, SPEC_MASK_ALL, false);
+            caster->removeSpell(MIND_BLAST_DISCIPLINE, SPEC_MASK_ALL, false);
+            caster->removeSpell(INNER_FOCUS, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_pri_discipline_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_pri_discipline_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_pri_discipline_spec_AuraScript();
+    }
+};
+
+enum Holyspecspells
+{
+    HOLY_SPECIALIZATION         = 85003,
+    CIRCLE_OF_HEALING           = 85022,
+    SPIRIT_OF_REDEMPTION        = 20711,
+    MEDITATION_HOLY             = 85021,
+    DIVINE_FURY_HOLY            = 85025,
+    HOLY_FIRE                   = 14914,
+    RENEW                       = 139,
+    HOLY_NOVA                   = 15237,
+};
+
+// 85002 Holy Specialization
+class spell_pri_holy_spec : public SpellScriptLoader
+{
+public:
+    spell_pri_holy_spec() : SpellScriptLoader("spell_pri_holy_spec") {}
+
+    class spell_pri_holy_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_pri_holy_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(CIRCLE_OF_HEALING))
+                return;
+
+            caster->learnSpell(CIRCLE_OF_HEALING, false);
+            caster->learnSpell(SPIRIT_OF_REDEMPTION, false);
+            caster->learnSpell(HOLY_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(CIRCLE_OF_HEALING, SPEC_MASK_ALL, false);
+            caster->removeSpell(SPIRIT_OF_REDEMPTION, SPEC_MASK_ALL, false);
+            caster->removeSpell(HOLY_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(MEDITATION_HOLY, SPEC_MASK_ALL, false);
+            caster->removeSpell(DIVINE_FURY_HOLY, SPEC_MASK_ALL, false);
+            caster->removeSpell(HOLY_FIRE, SPEC_MASK_ALL, false);
+            caster->removeSpell(RENEW, SPEC_MASK_ALL, false);
+            caster->removeSpell(HOLY_NOVA, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_pri_holy_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_pri_holy_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_pri_holy_spec_AuraScript();
+    }
+};
+
+enum Shadowspecspells
+{
+    SHADOW_SPECIALIZATION   = 85005,
+    SHADOWFORM_R1           = 85030,
+    MIND_FLAY               = 85031,
+    SPIRIT_TAP              = 85026,
+    SHADOW_WEAVING          = 85029,
+    DEVOURING_PLAGUE        = 2944,
+    MIND_BLAST_SHADOW       = 8092,
+};
+
+// 85004 Shadow Specialization
+class spell_pri_shadow_spec : public SpellScriptLoader
+{
+public:
+    spell_pri_shadow_spec() : SpellScriptLoader("spell_pri_shadow_spec") {}
+
+    class spell_pri_shadow_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_pri_shadow_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(MIND_FLAY))
+                return;
+
+            caster->learnSpell(MIND_FLAY, false);
+            caster->learnSpell(SHADOWFORM_R1, false);
+            caster->learnSpell(SHADOW_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(MIND_FLAY, SPEC_MASK_ALL, false);
+            caster->removeSpell(SHADOWFORM_R1, SPEC_MASK_ALL, false);
+            caster->removeSpell(SHADOW_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(SPIRIT_TAP, SPEC_MASK_ALL, false);
+            caster->removeSpell(SHADOW_WEAVING, SPEC_MASK_ALL, false);
+            caster->removeSpell(DEVOURING_PLAGUE, SPEC_MASK_ALL, false);
+            caster->removeSpell(MIND_BLAST_SHADOW, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_pri_shadow_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_pri_shadow_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_pri_shadow_spec_AuraScript();
+    }
+};
+
+// 85027 - Improved Spirit Tap
+class spell_pri_improved_spirit_tap : public SpellScriptLoader
+{
+public:
+    spell_pri_improved_spirit_tap() : SpellScriptLoader("spell_pri_improved_spirit_tap") {}
+
+    class spell_pri_improved_spirit_tap_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_pri_improved_spirit_tap_AuraScript);
+
+        bool CheckProc(ProcEventInfo& eventInfo)
+        {
+            SpellInfo const* spellInfo = eventInfo.GetSpellInfo();
+            if (!spellInfo)
+                return false;
+
+            // Mind Blast & Shadow Word: Death - full chance
+            if ((spellInfo->SpellFamilyFlags[0] & 0x2000) || (spellInfo->SpellFamilyFlags[1] & 0x2))
+                return true;
+
+            // Rest of spells have half chance
+            return roll_chance_i(50);
+        }
+
+        void Register() override
+        {
+            DoCheckProc += AuraCheckProcFn(spell_pri_improved_spirit_tap_AuraScript::CheckProc);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_pri_improved_spirit_tap_AuraScript();
+    }
+};
+
 void AddSC_priest_spell_scripts()
 {
     // Ours
     new spell_pri_shadowfiend_scaling();
+    new spell_pri_discipline_spec();
+    new spell_pri_holy_spec();
+    new spell_pri_shadow_spec();
+    new spell_pri_improved_spirit_tap();
 
     // Theirs
     new spell_pri_circle_of_healing();

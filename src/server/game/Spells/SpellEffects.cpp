@@ -4226,13 +4226,18 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
                             if( !unitTarget )
                                 return;
 
-                            Aura* overkill = unitTarget->GetAura(58427);
-                            if( overkill )
+                            Aura* overkillR2 = unitTarget->GetAura(58427);
+                            Aura* overkillR1 = unitTarget->GetAura(86013);
+                            if( overkillR2 )
                             {
-                                overkill->SetMaxDuration(20000);
-                                overkill->SetDuration(20000, true);
+                                overkillR2->SetMaxDuration(20000);
+                                overkillR2->SetDuration(20000, true);
                             }
-
+                            if(overkillR1)
+                            {
+                                overkillR1->SetMaxDuration(20000);
+                                overkillR1->SetDuration(20000, true);
+                            }
                             break;
                         }
                 }

@@ -1414,6 +1414,250 @@ public:
     }
 };
 
+enum Elementalspecspells
+{
+    ELEMENTAL_SPECIALIZATION    = 87001,
+    LAVA_BURST                  = 87006,
+    ELEMENTAL_OVERLOAD          = 87008,
+    LIGHTNING_MASTERY           = 87009,
+    ELEMENTAL_FURY              = 87010,
+    ELEMENTAL_FOCUS             = 16164,
+    EYE_OF_THE_STORM            = 87025,
+};
+
+// 87000 Elemental Specialization
+class spell_sha_elemental_spec : public SpellScriptLoader
+{
+public:
+    spell_sha_elemental_spec() : SpellScriptLoader("spell_sha_elemental_spec") {}
+
+    class spell_sha_elemental_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_sha_elemental_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(LAVA_BURST))
+                return;
+
+            caster->learnSpell(LAVA_BURST, false);
+            caster->learnSpell(ELEMENTAL_OVERLOAD, false);
+            caster->learnSpell(ELEMENTAL_SPECIALIZATION, false);
+            caster->learnSpell(EYE_OF_THE_STORM, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(LAVA_BURST, SPEC_MASK_ALL, false);
+            caster->removeSpell(ELEMENTAL_OVERLOAD, SPEC_MASK_ALL, false);
+            caster->removeSpell(ELEMENTAL_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(LIGHTNING_MASTERY, SPEC_MASK_ALL, false);
+            caster->removeSpell(ELEMENTAL_FURY, SPEC_MASK_ALL, false);
+            caster->removeSpell(ELEMENTAL_FOCUS, SPEC_MASK_ALL, false);
+            caster->removeSpell(EYE_OF_THE_STORM, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_sha_elemental_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_sha_elemental_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_sha_elemental_spec_AuraScript();
+    }
+};
+
+enum Enhancementspecspells
+{
+    ENCHANCEMENT_SPECIALIZATION = 87003,
+    STORMSTRIKE                 = 17364,
+    DUAL_WIELD                  = 674,
+    MAELSTROM_WEAPON            = 87027,
+    SHAMANISTIC_FOCUS           = 43338,
+    ELEMENTAL_WEAPONS           = 87011,
+    IMPROVED_STORMSTRIKE        = 87012,
+};
+
+// 87002 Enhancement Specialization
+class spell_sha_enhancement_spec : public SpellScriptLoader
+{
+public:
+    spell_sha_enhancement_spec() : SpellScriptLoader("spell_sha_enhancement_spec") {}
+
+    class spell_sha_enhancement_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_sha_enhancement_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(STORMSTRIKE))
+                return;
+
+            caster->learnSpell(STORMSTRIKE, false);
+            caster->learnSpell(DUAL_WIELD, false);
+            caster->learnSpell(MAELSTROM_WEAPON, false);
+            caster->learnSpell(ENCHANCEMENT_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(STORMSTRIKE, SPEC_MASK_ALL, false);
+            caster->removeSpell(DUAL_WIELD, SPEC_MASK_ALL, false);
+            caster->removeSpell(ENCHANCEMENT_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(SHAMANISTIC_FOCUS, SPEC_MASK_ALL, false);
+            caster->removeSpell(ELEMENTAL_WEAPONS, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_STORMSTRIKE, SPEC_MASK_ALL, false);
+            caster->removeSpell(MAELSTROM_WEAPON, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_sha_enhancement_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_sha_enhancement_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_sha_enhancement_spec_AuraScript();
+    }
+};
+
+enum Restorationspecspells
+{
+    RESTORATION_SPECIALIZATION  = 87005,
+    RIPTIDE                     = 87022,
+    TIDAL_WAVES                 = 87024,
+    HEALING_FOCUS               = 87014,
+    IMPROVED_HEALING_WAVE       = 87015,
+    HEALING_WAY                 = 87016,
+    TIDAL_FORCE                 = 55198,
+};
+
+// 87004 Restoration Specialization
+class spell_sha_restoration_spec : public SpellScriptLoader
+{
+public:
+    spell_sha_restoration_spec() : SpellScriptLoader("spell_sha_restoration_spec") {}
+
+    class spell_sha_restoration_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_sha_restoration_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(RIPTIDE))
+                return;
+
+            caster->learnSpell(RIPTIDE, false);
+            caster->learnSpell(TIDAL_WAVES, false);
+            caster->learnSpell(RESTORATION_SPECIALIZATION, false);
+            caster->learnSpell(HEALING_FOCUS, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(RIPTIDE, SPEC_MASK_ALL, false);
+            caster->removeSpell(TIDAL_WAVES, SPEC_MASK_ALL, false);
+            caster->removeSpell(RESTORATION_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(HEALING_FOCUS, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_HEALING_WAVE, SPEC_MASK_ALL, false);
+            caster->removeSpell(HEALING_WAY, SPEC_MASK_ALL, false);
+            caster->removeSpell(TIDAL_FORCE, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_sha_restoration_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_sha_restoration_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_sha_restoration_spec_AuraScript();
+    }
+};
+
+// 87018 Healing Way
+class spell_sha_healing_way : public SpellScriptLoader
+{
+public:
+    spell_sha_healing_way() : SpellScriptLoader("spell_sha_healing_way") {}
+
+    class spell_sha_healing_way_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_sha_healing_way_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->GetAura(87018)->GetStackAmount() == 2)
+                caster->AddAura(87017, caster);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_sha_healing_way_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_sha_healing_way_AuraScript();
+    }
+};
+
 void AddSC_shaman_spell_scripts()
 {
     // ours
@@ -1423,6 +1667,10 @@ void AddSC_shaman_spell_scripts()
     new spell_sha_totemic_mastery();
     new spell_sha_feral_spirit_scaling();
     new spell_sha_fire_elemental_scaling();
+    new spell_sha_healing_way();
+    new spell_sha_elemental_spec();
+    new spell_sha_enhancement_spec();
+    new spell_sha_restoration_spec();
 
     // theirs
     new spell_sha_ancestral_awakening_proc();

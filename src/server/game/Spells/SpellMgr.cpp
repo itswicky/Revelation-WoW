@@ -3216,6 +3216,8 @@ void SpellMgr::LoadSpellCustomAttr()
             case 32594: // Earth Shield aura
             case 49283: // Earth Shield aura
             case 49284: // Earth Shield aura
+            case 87019: // Earth Shield aura
+            case 87020: // Earth Shield aura
             case 50526: // Wandering Plague
             case 53353: // Chimera Shot - Serpent trigger
             case 52752: // Ancestral Awakening Heal

@@ -10738,6 +10738,7 @@ float Unit::SpellPctDamageModsDone(Unit* victim, SpellInfo const* spellProto, Da
             // Soul Siphon
             case 4992:
             case 4993:
+            case 88011:
                 {
                     // effect 1 m_amount
                     int32 maxPercent = (*i)->GetAmount();

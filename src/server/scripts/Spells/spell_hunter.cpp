@@ -67,7 +67,8 @@ enum HunterSpells
     SPELL_DRAENEI_GIFT_OF_THE_NAARU                 = 59543,
     SPELL_HUNTER_GLYPH_OF_ARCANE_SHOT               = 61389,
     SPELL_LOCK_AND_LOAD_TRIGGER                     = 56453,
-    SPELL_LOCK_AND_LOAD_MARKER                      = 67544
+    SPELL_LOCK_AND_LOAD_MARKER                      = 67544,
+    SPELL_HUNTER_CARVE_DOT                          = 82026,
 };
 
 // Ours
@@ -1727,7 +1728,7 @@ public:
 
         bool Validate(SpellInfo const* /*spellInfo*/) override
         {
-            return ValidateSpellInfo({CARVE});
+            return ValidateSpellInfo({SPELL_HUNTER_CARVE_DOT});
         }
 
         void HandleDummy(SpellEffIndex /*effIndex*/)

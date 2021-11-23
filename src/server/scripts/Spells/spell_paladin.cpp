@@ -1410,7 +1410,7 @@ enum Protectionspecspells
     REDOUBT                     = 84018,
     SPIRITUAL_ATTUNEMENT        = 84019,
     IMPROVED_DEVOTION_AURA      = 84020,
-    RETRIBUTION_AURA_PROTECTION = 7294,
+    RETRIBUTION_AURA_PROTECTION = 84021,
     RIGHTEOUS_DEFENSE           = 31789,
 };
 
@@ -1478,7 +1478,7 @@ enum Retributionspecspells
     CRUSADER_STRIKE             = 35395,
     IMPROVED_JUDGEMENTS         = 84023,
     SEAL_OF_COMMAND             = 20375,
-    RETRIBUTION_AURA_RET        = 84021,
+    RETRIBUTION_AURA_RET        = 7294,
     JUDGEMENTS_OF_THE_WISE      = 84022,
     CONVICTION                  = 84024,
 };

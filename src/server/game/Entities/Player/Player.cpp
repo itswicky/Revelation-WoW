@@ -3003,6 +3003,10 @@ bool Player::_addSpell(uint32 spellId, uint8 addSpecMask, bool temporary, bool l
     if (itr != m_spells.end() && itr->second->State == PLAYERSPELL_TEMPORARY)
         return false;
 
+    // Do not add Dual Wield to player if they are Shaman class. This should only ever be taught by Enhancement Specialization spellscript in spell_shaman.
+    if (spellInfo->Id == 674 && getClass() == CLASS_SHAMAN && !HasSpell(87003))
+        return false;
+
     // xinef: send packet so client can properly recognize this new spell
     // xinef: ignore passive spells and spells with learn effect
     // xinef: send spells with no aura effects (ie dual wield)

@@ -1519,9 +1519,9 @@ public:
                 return;
 
             caster->learnSpell(STORMSTRIKE, false);
-            caster->learnSpell(DUAL_WIELD, false);
             caster->learnSpell(MAELSTROM_WEAPON, false);
             caster->learnSpell(ENCHANCEMENT_SPECIALIZATION, false);
+            caster->CastSpell(caster, 30798);
         }
 
         void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
@@ -1537,6 +1537,7 @@ public:
             caster->removeSpell(ELEMENTAL_WEAPONS, SPEC_MASK_ALL, false);
             caster->removeSpell(IMPROVED_STORMSTRIKE, SPEC_MASK_ALL, false);
             caster->removeSpell(MAELSTROM_WEAPON, SPEC_MASK_ALL, false);
+            caster->SetCanDualWield(false);
         }
 
         void Register() override
@@ -1621,7 +1622,7 @@ public:
     }
 };
 
-// 87018 Healing Way
+// 87016 Healing Way
 class spell_sha_healing_way : public SpellScriptLoader
 {
 public:
@@ -1636,19 +1637,38 @@ public:
             return GetCaster()->GetTypeId() == TYPEID_PLAYER;
         }
 
-        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        bool CheckProc(ProcEventInfo& eventInfo)
         {
-            Player* caster = GetCaster()->ToPlayer();
+            if (Unit* caster = eventInfo.GetActor())
+
+            if (caster->HasAura(87017))
+                return false;
+
+            return true;
+        }
+
+        void HandleProc(AuraEffect const* aurEff, ProcEventInfo& eventInfo)
+        {
+            PreventDefaultAction();
+            Unit* caster = eventInfo.GetActor();
             if (!caster)
                 return;
 
-            if (caster->GetAura(87018)->GetStackAmount() == 2)
+            if (caster->HasAura(87018))
+            {
+                caster->RemoveAura(87018);
                 caster->AddAura(87017, caster);
+            }
+            else if (caster->HasAura(87017))
+                return;
+            else
+                caster->AddAura(87018, caster);
         }
 
         void Register() override
         {
-            OnEffectApply += AuraEffectApplyFn(spell_sha_healing_way_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            DoCheckProc += AuraCheckProcFn(spell_sha_healing_way_AuraScript::CheckProc);
+            OnEffectProc += AuraEffectProcFn(spell_sha_healing_way_AuraScript::HandleProc, EFFECT_0, SPELL_AURA_PROC_TRIGGER_SPELL);
         }
     };
 

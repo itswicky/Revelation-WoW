@@ -893,8 +893,8 @@ bool Guardian::InitStatsForLevel(uint8 petlevel)
                         {
                             if (getLevel() < 50)
                             {
-                                SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, float((petlevel * 3) - (petlevel / 2)));
-                                SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, float((petlevel * 3) + (petlevel / 2)));
+                                SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, float((petlevel * 2) - (petlevel / 2)));
+                                SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, float((petlevel * 2) + (petlevel / 2)));
                             }
 
                             // xinef: Glyph of Felguard, so ugly im crying... no appropriate spell

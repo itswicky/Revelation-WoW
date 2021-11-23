@@ -6614,6 +6614,7 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                     case 18095:
                     // Glyph of corruption
                     case 56218:
+                    case 88009: // Custom Nightfall
                         {
                             target = this;
                             triggered_spell_id = 17941;

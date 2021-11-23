@@ -1475,6 +1475,215 @@ public:
         return new spell_warl_drain_soul_AuraScript();
     }
 };
+
+enum Afflictionspecspells
+{
+    AFFLICTION_SPECIALIZATION   = 88001,
+    UNSTABLE_AFFLICTION         = 88007,
+    NIGHTFALL                   = 88009,
+    IMPROVED_LIFE_TAP           = 88010,
+    SOUL_SIPHON                 = 88011,
+    DRAIN_LIFE                  = 689,
+    AMPLIFY_CURSE               = 18288,
+};
+
+// 88000 Affliction Specialization
+class spell_warl_affliction_spec : public SpellScriptLoader
+{
+public:
+    spell_warl_affliction_spec() : SpellScriptLoader("spell_warl_affliction_spec") {}
+
+    class spell_warl_affliction_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_warl_affliction_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(UNSTABLE_AFFLICTION))
+                return;
+
+            caster->learnSpell(UNSTABLE_AFFLICTION, false);
+            caster->learnSpell(NIGHTFALL, false);
+            caster->learnSpell(AFFLICTION_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(UNSTABLE_AFFLICTION, SPEC_MASK_ALL, false);
+            caster->removeSpell(NIGHTFALL, SPEC_MASK_ALL, false);
+            caster->removeSpell(AFFLICTION_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_LIFE_TAP, SPEC_MASK_ALL, false);
+            caster->removeSpell(SOUL_SIPHON, SPEC_MASK_ALL, false);
+            caster->removeSpell(DRAIN_LIFE, SPEC_MASK_ALL, false);
+            caster->removeSpell(AMPLIFY_CURSE, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_warl_affliction_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_warl_affliction_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_warl_affliction_spec_AuraScript();
+    }
+};
+
+enum Demonologyspecspells
+{
+    DEMONOLOGY_SPECIALIZATION   = 88003,
+    SUMMON_FELGUARD             = 30146,
+    MASTER_SUMMONER             = 88013,
+    RAIN_OF_FIRE_DEMONOLOGY     = 88012,
+    HEALTH_FUNNEL               = 755,
+    FEL_DOMINATION              = 18708,
+    MANA_FEED                   = 30326,
+    MASTER_DEMONOLOGIST         = 23825,
+};
+
+// 88002 Demonology Specialization
+class spell_warl_demonology_spec : public SpellScriptLoader
+{
+public:
+    spell_warl_demonology_spec() : SpellScriptLoader("spell_warl_demonology_spec") {}
+
+    class spell_warl_demonology_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_warl_demonology_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(SUMMON_FELGUARD))
+                return;
+
+            caster->learnSpell(SUMMON_FELGUARD, false);
+            caster->learnSpell(MASTER_SUMMONER, false);
+            caster->learnSpell(DEMONOLOGY_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(SUMMON_FELGUARD, SPEC_MASK_ALL, false);
+            caster->removeSpell(MASTER_SUMMONER, SPEC_MASK_ALL, false);
+            caster->removeSpell(DEMONOLOGY_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(RAIN_OF_FIRE_DEMONOLOGY, SPEC_MASK_ALL, false);
+            caster->removeSpell(HEALTH_FUNNEL, SPEC_MASK_ALL, false);
+            caster->removeSpell(FEL_DOMINATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(MANA_FEED, SPEC_MASK_ALL, false);
+            caster->removeSpell(MASTER_DEMONOLOGIST, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_warl_demonology_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_warl_demonology_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_warl_demonology_spec_AuraScript();
+    }
+};
+
+enum Destructionspecspells
+{
+    DESTRUCTION_SPECIALIZATION  = 88005,
+    CONFLAGRATE                 = 17962,
+    BACKDRAFT                   = 88015,
+    BANE                        = 88016,
+    RUIN                        = 88017,
+    SEARING_PAIN                = 5676,
+    RAIN_OF_FIRE_DESTRUCTION    = 5740,
+    SHADOWBURN                  = 17877,
+};
+
+// 88004 Destruction Specialization
+class spell_warl_destruction_spec : public SpellScriptLoader
+{
+public:
+    spell_warl_destruction_spec() : SpellScriptLoader("spell_warl_destruction_spec") {}
+
+    class spell_warl_destruction_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_warl_destruction_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(CONFLAGRATE))
+                return;
+
+            caster->learnSpell(CONFLAGRATE, false);
+            caster->learnSpell(BACKDRAFT, false);
+            caster->learnSpell(DESTRUCTION_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(CONFLAGRATE, SPEC_MASK_ALL, false);
+            caster->removeSpell(BACKDRAFT, SPEC_MASK_ALL, false);
+            caster->removeSpell(DESTRUCTION_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(BANE, SPEC_MASK_ALL, false);
+            caster->removeSpell(RUIN, SPEC_MASK_ALL, false);
+            caster->removeSpell(SEARING_PAIN, SPEC_MASK_ALL, false);
+            caster->removeSpell(RAIN_OF_FIRE_DESTRUCTION, SPEC_MASK_ALL, false);
+            caster->removeSpell(SHADOWBURN, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_warl_destruction_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_warl_destruction_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_warl_destruction_spec_AuraScript();
+    }
+};
+
 void AddSC_warlock_spell_scripts()
 {
     // Ours
@@ -1487,6 +1696,9 @@ void AddSC_warlock_spell_scripts()
     new spell_warl_demonic_knowledge();
     new spell_warl_generic_scaling();
     new spell_warl_infernal_scaling();
+    new spell_warl_affliction_spec();
+    new spell_warl_demonology_spec();
+    new spell_warl_destruction_spec();
 
     // Theirs
     new spell_warl_banish();

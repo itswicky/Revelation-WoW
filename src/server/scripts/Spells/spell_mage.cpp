@@ -1483,7 +1483,10 @@ public:
                 return true;
 
             // Rest of spells have half chance
-            return roll_chance_i(50);
+            else if(spellInfo->SpellFamilyFlags[0] & 0x1 || spellInfo->SpellFamilyFlags[0] & 0x20)
+                return roll_chance_i(50);
+
+            else return false;
         }
 
         void Register() override

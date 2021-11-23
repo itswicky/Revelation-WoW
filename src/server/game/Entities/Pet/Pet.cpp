@@ -891,10 +891,15 @@ bool Guardian::InitStatsForLevel(uint8 petlevel)
                 {
                     case NPC_FELGUARD:
                         {
+                            if (getLevel() < 50)
+                            {
+                                SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, float((petlevel * 3) - (petlevel / 2)));
+                                SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, float((petlevel * 3) + (petlevel / 2)));
+                            }
+
                             // xinef: Glyph of Felguard, so ugly im crying... no appropriate spell
                             if (AuraEffect* aurEff = owner->GetAuraEffectDummy(SPELL_GLYPH_OF_FELGUARD))
                                 SetModifierValue(UNIT_MOD_ATTACK_POWER, TOTAL_PCT, 1.0f + float(aurEff->GetAmount() / 100.0f));
-
                             break;
                         }
                     case NPC_WATER_ELEMENTAL_PERM:

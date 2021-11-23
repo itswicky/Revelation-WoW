@@ -1549,7 +1549,7 @@ enum Demonologyspecspells
     DEMONOLOGY_SPECIALIZATION   = 88003,
     SUMMON_FELGUARD             = 30146,
     MASTER_SUMMONER             = 88013,
-    UNHOLY_POWER                = 88024,
+    //UNHOLY_POWER                = 88024,
     RAIN_OF_FIRE_DEMONOLOGY     = 88012,
     HEALTH_FUNNEL               = 755,
     FEL_DOMINATION              = 18708,
@@ -1584,7 +1584,7 @@ public:
             caster->learnSpell(SUMMON_FELGUARD, false);
             caster->learnSpell(MASTER_SUMMONER, false);
             caster->learnSpell(DEMONOLOGY_SPECIALIZATION, false);
-            caster->learnSpell(UNHOLY_POWER, false);
+            //caster->learnSpell(UNHOLY_POWER, false);
         }
 
         void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
@@ -1595,13 +1595,13 @@ public:
 
             caster->removeSpell(SUMMON_FELGUARD, SPEC_MASK_ALL, false);
             caster->removeSpell(MASTER_SUMMONER, SPEC_MASK_ALL, false);
-            caster->removeSpell(UNHOLY_POWER, SPEC_MASK_ALL, false);
+            caster->removeSpell(DEMONOLOGY_SPECIALIZATION, SPEC_MASK_ALL, false);
             caster->removeSpell(RAIN_OF_FIRE_DEMONOLOGY, SPEC_MASK_ALL, false);
             caster->removeSpell(HEALTH_FUNNEL, SPEC_MASK_ALL, false);
             caster->removeSpell(FEL_DOMINATION, SPEC_MASK_ALL, false);
             caster->removeSpell(MANA_FEED, SPEC_MASK_ALL, false);
             caster->removeSpell(MASTER_DEMONOLOGIST, SPEC_MASK_ALL, false);
-            caster->removeSpell(MASTER_DEMONOLOGIST, SPEC_MASK_ALL, false);
+            //caster->removeSpell(UNHOLY_POWER, SPEC_MASK_ALL, false);
         }
 
         void Register() override

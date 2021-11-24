@@ -1409,7 +1409,7 @@ enum Protectionspecspells
     SHIELD_OF_RIGHTEOUSNESS     = 84017,
     REDOUBT                     = 84018,
     SPIRITUAL_ATTUNEMENT        = 84019,
-    IMPROVED_DEVOTION_AURA      = 84020,
+    UNWAIVERING_DEVOTION        = 84020,
     RETRIBUTION_AURA_PROTECTION = 84021,
     RIGHTEOUS_DEFENSE           = 31789,
 };
@@ -1454,7 +1454,7 @@ public:
             caster->removeSpell(PROTECTION_SPECIALIZATION, SPEC_MASK_ALL, false);
             caster->removeSpell(SHIELD_OF_RIGHTEOUSNESS, SPEC_MASK_ALL, false);
             caster->removeSpell(SPIRITUAL_ATTUNEMENT, SPEC_MASK_ALL, false);
-            caster->removeSpell(IMPROVED_DEVOTION_AURA, SPEC_MASK_ALL, false);
+            caster->removeSpell(UNWAIVERING_DEVOTION, SPEC_MASK_ALL, false);
             caster->removeSpell(RETRIBUTION_AURA_PROTECTION, SPEC_MASK_ALL, false);
             caster->removeSpell(RIGHTEOUS_DEFENSE, SPEC_MASK_ALL, false);
         }

@@ -6223,20 +6223,6 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                             victim->RemoveAurasWithMechanic(1 << MECHANIC_STUN, AURA_REMOVE_BY_ENEMY_SPELL);
                             return true;
                         }
-                    case 89012:
-                        {
-                            // Roll chance
-                            if (!victim || !victim->IsAlive() || !roll_chance_i(triggerAmount))
-                                return false;
-
-                            victim->RemoveAurasWithMechanic(1 << MECHANIC_DAZE, AURA_REMOVE_BY_ENEMY_SPELL);
-                            victim->RemoveAurasWithMechanic(1 << MECHANIC_FREEZE, AURA_REMOVE_BY_ENEMY_SPELL);
-                            victim->RemoveAurasWithMechanic(1 << MECHANIC_ROOT, AURA_REMOVE_BY_ENEMY_SPELL);
-                            victim->RemoveAurasWithMechanic(1 << MECHANIC_SNARE, AURA_REMOVE_BY_ENEMY_SPELL);
-
-                            triggered_spell_id = 89013;
-                            break;
-                        }
                     // Glyph of Life Tap
                     case 63320:
                         {
@@ -6533,6 +6519,25 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                             return false;
                         }
                 }
+                switch (dummySpell->Id)
+                {
+                    case 89012:
+                    {
+                        target = this;
+                        // Roll chance
+                        if (!target || !target->IsAlive() || !roll_chance_i(triggerAmount))
+                            return false;
+
+                        target->RemoveAurasWithMechanic(1 << MECHANIC_DAZE, AURA_REMOVE_BY_ENEMY_SPELL);
+                        target->RemoveAurasWithMechanic(1 << MECHANIC_FREEZE, AURA_REMOVE_BY_ENEMY_SPELL);
+                        target->RemoveAurasWithMechanic(1 << MECHANIC_ROOT, AURA_REMOVE_BY_ENEMY_SPELL);
+                        target->RemoveAurasWithMechanic(1 << MECHANIC_SNARE, AURA_REMOVE_BY_ENEMY_SPELL);
+
+                        triggered_spell_id = 89013;
+                        break;
+                    }
+                }
+                break;
 
                 // Second Wind
                 if (dummySpell->SpellIconID == 1697)

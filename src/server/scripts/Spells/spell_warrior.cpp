@@ -1215,12 +1215,12 @@ public:
             if (!caster)
                 return;
 
-            if (caster->HasSpell(BLOODTHIRST))
+            if (caster->HasSpell(SHIELD_SLAM))
                 return;
 
-            caster->learnSpell(BLOODTHIRST, false);
-            caster->learnSpell(UNDENIABLE, false);
-            caster->learnSpell(FURY_SPECIALIZATION, false);
+            caster->learnSpell(SHIELD_SLAM, false);
+            caster->learnSpell(SWORD_AND_BOARD, false);
+            caster->learnSpell(PROTECTION_SPECIALIZATION, false);
         }
 
         void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
@@ -1229,12 +1229,14 @@ public:
             if (!caster)
                 return;
 
-            caster->removeSpell(BLOODTHIRST, SPEC_MASK_ALL, false);
-            caster->removeSpell(UNDENIABLE, SPEC_MASK_ALL, false);
-            caster->removeSpell(FURY_SPECIALIZATION, SPEC_MASK_ALL, false);
-            caster->removeSpell(UNBRIDLED_WRATH, SPEC_MASK_ALL, false);
-            caster->removeSpell(ENRAGE, SPEC_MASK_ALL, false);
-            caster->removeSpell(PIERCING_HOWL, SPEC_MASK_ALL, false);
+            caster->removeSpell(SHIELD_SLAM, SPEC_MASK_ALL, false);
+            caster->removeSpell(SWORD_AND_BOARD, SPEC_MASK_ALL, false);
+            caster->removeSpell(PROTECTION_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(SHIELD_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(SHIELD_MASTERY, SPEC_MASK_ALL, false);
+            caster->removeSpell(LAST_STAND, SPEC_MASK_ALL, false);
+            caster->removeSpell(SHIELD_BASH, SPEC_MASK_ALL, false);
+            caster->removeSpell(SHIELD_BLOCK, SPEC_MASK_ALL, false);
         }
 
         void Register() override

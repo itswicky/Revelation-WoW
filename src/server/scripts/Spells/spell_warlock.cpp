@@ -1485,6 +1485,7 @@ enum Afflictionspecspells
     SOUL_SIPHON                 = 88011,
     DRAIN_LIFE                  = 689,
     AMPLIFY_CURSE               = 18288,
+    BANE_AFFLICTION             = 88025,
 };
 
 // 88000 Affliction Specialization
@@ -1529,6 +1530,7 @@ public:
             caster->removeSpell(SOUL_SIPHON, SPEC_MASK_ALL, false);
             caster->removeSpell(DRAIN_LIFE, SPEC_MASK_ALL, false);
             caster->removeSpell(AMPLIFY_CURSE, SPEC_MASK_ALL, false);
+            caster->removeSpell(BANE_AFFLICTION, SPEC_MASK_ALL, false);
         }
 
         void Register() override
@@ -1555,6 +1557,7 @@ enum Demonologyspecspells
     FEL_DOMINATION              = 18708,
     MANA_FEED                   = 30326,
     MASTER_DEMONOLOGIST         = 23825,
+    BANE_DEMONOLOGY             = 88026,
 };
 
 // 88002 Demonology Specialization
@@ -1602,6 +1605,7 @@ public:
             caster->removeSpell(MANA_FEED, SPEC_MASK_ALL, false);
             caster->removeSpell(MASTER_DEMONOLOGIST, SPEC_MASK_ALL, false);
             //caster->removeSpell(UNHOLY_POWER, SPEC_MASK_ALL, false);
+            caster->removeSpell(BANE_DEMONOLOGY, SPEC_MASK_ALL, false);
         }
 
         void Register() override
@@ -1622,7 +1626,7 @@ enum Destructionspecspells
     DESTRUCTION_SPECIALIZATION  = 88005,
     CONFLAGRATE                 = 17962,
     BACKDRAFT                   = 88015,
-    BANE                        = 88016,
+    BANE_DESTRUCTION            = 88016,
     RUIN                        = 88017,
     SEARING_PAIN                = 5676,
     RAIN_OF_FIRE_DESTRUCTION    = 5740,
@@ -1667,7 +1671,7 @@ public:
             caster->removeSpell(CONFLAGRATE, SPEC_MASK_ALL, false);
             caster->removeSpell(BACKDRAFT, SPEC_MASK_ALL, false);
             caster->removeSpell(DESTRUCTION_SPECIALIZATION, SPEC_MASK_ALL, false);
-            caster->removeSpell(BANE, SPEC_MASK_ALL, false);
+            caster->removeSpell(BANE_DESTRUCTION, SPEC_MASK_ALL, false);
             caster->removeSpell(RUIN, SPEC_MASK_ALL, false);
             caster->removeSpell(SEARING_PAIN, SPEC_MASK_ALL, false);
             caster->removeSpell(RAIN_OF_FIRE_DESTRUCTION, SPEC_MASK_ALL, false);

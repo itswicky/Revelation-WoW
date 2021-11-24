@@ -6215,13 +6215,27 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                     case 31871:
                     case 31872:
                         {
-                            // Roll chane
+                            // Roll chance
                             if (!victim || !victim->IsAlive() || !roll_chance_i(triggerAmount))
                                 return false;
 
                             // Remove any stun effect on target
                             victim->RemoveAurasWithMechanic(1 << MECHANIC_STUN, AURA_REMOVE_BY_ENEMY_SPELL);
                             return true;
+                        }
+                    case 89012:
+                        {
+                            // Roll chance
+                            if (!victim || !victim->IsAlive() || !roll_chance_i(triggerAmount))
+                                return false;
+
+                            victim->RemoveAurasWithMechanic(1 << MECHANIC_DAZE, AURA_REMOVE_BY_ENEMY_SPELL);
+                            victim->RemoveAurasWithMechanic(1 << MECHANIC_FREEZE, AURA_REMOVE_BY_ENEMY_SPELL);
+                            victim->RemoveAurasWithMechanic(1 << MECHANIC_ROOT, AURA_REMOVE_BY_ENEMY_SPELL);
+                            victim->RemoveAurasWithMechanic(1 << MECHANIC_SNARE, AURA_REMOVE_BY_ENEMY_SPELL);
+
+                            triggered_spell_id = 89012;
+                            break;
                         }
                     // Glyph of Life Tap
                     case 63320:
@@ -8838,6 +8852,7 @@ bool Unit::HandleProcTriggerSpell(Unit* victim, uint32 damage, AuraEffect* trigg
         case 12834:
         case 12849:
         case 12867:
+        case 89006: // Custom deep wounds spell
             {
                 if (GetTypeId() != TYPEID_PLAYER)
                     return false;

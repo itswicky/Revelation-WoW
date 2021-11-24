@@ -1048,6 +1048,210 @@ public:
     }
 };
 
+enum Armsspecspells
+{
+    ARMS_SPECIALIZATION = 89001,
+    MORTAL_STRIKE       = 89007,
+    ENDLESS_RAGE        = 89009,
+    TASTE_FOR_BLOOD     = 89010,
+    WEAPONS_MASTER      = 89011,
+    OVERPOWER           = 7384,
+    RETALIATION         = 20230,
+};
+
+// 89000 Arms Specialization
+class spell_war_arms_spec : public SpellScriptLoader
+{
+public:
+    spell_war_arms_spec() : SpellScriptLoader("spell_war_arms_spec") {}
+
+    class spell_war_arms_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_war_arms_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(MORTAL_STRIKE))
+                return;
+
+            caster->learnSpell(MORTAL_STRIKE, false);
+            caster->learnSpell(ENDLESS_RAGE, false);
+            caster->learnSpell(ARMS_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(MORTAL_STRIKE, SPEC_MASK_ALL, false);
+            caster->removeSpell(ENDLESS_RAGE, SPEC_MASK_ALL, false);
+            caster->removeSpell(ARMS_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(TASTE_FOR_BLOOD, SPEC_MASK_ALL, false);
+            caster->removeSpell(WEAPONS_MASTER, SPEC_MASK_ALL, false);
+            caster->removeSpell(OVERPOWER, SPEC_MASK_ALL, false);
+            caster->removeSpell(RETALIATION, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_war_arms_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_war_arms_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_war_arms_spec_AuraScript();
+    }
+};
+
+enum Furyspecspells
+{
+    FURY_SPECIALIZATION = 89003,
+    BLOODTHIRST         = 23881,
+    UNDENIABLE          = 89012,
+    UNBRIDLED_WRATH     = 89014,
+    ENRAGE              = 89016,
+    PIERCING_HOWL       = 12323,
+};
+
+// 89002 Fury Specialization
+class spell_war_fury_spec : public SpellScriptLoader
+{
+public:
+    spell_war_fury_spec() : SpellScriptLoader("spell_war_fury_spec") {}
+
+    class spell_war_fury_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_war_fury_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(BLOODTHIRST))
+                return;
+
+            caster->learnSpell(BLOODTHIRST, false);
+            caster->learnSpell(UNDENIABLE, false);
+            caster->learnSpell(FURY_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(BLOODTHIRST, SPEC_MASK_ALL, false);
+            caster->removeSpell(UNDENIABLE, SPEC_MASK_ALL, false);
+            caster->removeSpell(FURY_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(UNBRIDLED_WRATH, SPEC_MASK_ALL, false);
+            caster->removeSpell(ENRAGE, SPEC_MASK_ALL, false);
+            caster->removeSpell(PIERCING_HOWL, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_war_fury_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_war_fury_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_war_fury_spec_AuraScript();
+    }
+};
+
+enum Protectionspecspells
+{
+    PROTECTION_SPECIALIZATION   = 89005,
+    SHIELD_SLAM                 = 89017,
+    SWORD_AND_BOARD             = 89018,
+    SHIELD_SPECIALIZATION       = 89020,
+    SHIELD_MASTERY              = 89021,
+    LAST_STAND                  = 12975,
+    SUNDER_ARMOR                = 7386,
+    SHIELD_BASH                 = 72,
+    SHIELD_BLOCK                = 2565,
+
+};
+
+// 89004 Protection Specialization
+class spell_war_protection_spec : public SpellScriptLoader
+{
+public:
+    spell_war_protection_spec() : SpellScriptLoader("spell_war_protection_spec") {}
+
+    class spell_war_protection_spec_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_war_protection_spec_AuraScript);
+
+        bool Load() override
+        {
+            return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        }
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            if (caster->HasSpell(BLOODTHIRST))
+                return;
+
+            caster->learnSpell(BLOODTHIRST, false);
+            caster->learnSpell(UNDENIABLE, false);
+            caster->learnSpell(FURY_SPECIALIZATION, false);
+        }
+
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
+        {
+            Player* caster = GetCaster()->ToPlayer();
+            if (!caster)
+                return;
+
+            caster->removeSpell(BLOODTHIRST, SPEC_MASK_ALL, false);
+            caster->removeSpell(UNDENIABLE, SPEC_MASK_ALL, false);
+            caster->removeSpell(FURY_SPECIALIZATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(UNBRIDLED_WRATH, SPEC_MASK_ALL, false);
+            caster->removeSpell(ENRAGE, SPEC_MASK_ALL, false);
+            caster->removeSpell(PIERCING_HOWL, SPEC_MASK_ALL, false);
+        }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_war_protection_spec_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_war_protection_spec_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_war_protection_spec_AuraScript();
+    }
+};
+
 void AddSC_warrior_spell_scripts()
 {
     // Ours
@@ -1056,6 +1260,9 @@ void AddSC_warrior_spell_scripts()
     new spell_warr_improved_spell_reflection();
     new spell_warr_improved_spell_reflection_trigger();
     new spell_warr_victory_rush();
+    new spell_war_arms_spec();
+    new spell_war_fury_spec();
+    new spell_war_protection_spec();
 
     // Theirs
     new spell_warr_bloodthirst();

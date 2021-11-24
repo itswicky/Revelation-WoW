@@ -1190,10 +1190,8 @@ enum Protectionspecspells
     SHIELD_SPECIALIZATION       = 89020,
     SHIELD_MASTERY              = 89021,
     LAST_STAND                  = 12975,
-    SUNDER_ARMOR                = 7386,
     SHIELD_BASH                 = 72,
     SHIELD_BLOCK                = 2565,
-
 };
 
 // 89004 Protection Specialization

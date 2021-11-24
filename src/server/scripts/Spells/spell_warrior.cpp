@@ -1186,7 +1186,7 @@ enum Protectionspecspells
 {
     PROTECTION_SPECIALIZATION   = 89005,
     SHIELD_SLAM                 = 89017,
-    SWORD_AND_BOARD             = 89018,
+    SWORD_AND_BOARD             = 89019,
     SHIELD_SPECIALIZATION       = 89020,
     SHIELD_MASTERY              = 89021,
     LAST_STAND                  = 12975,

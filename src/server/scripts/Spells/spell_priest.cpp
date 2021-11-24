@@ -1127,12 +1127,13 @@ public:
 enum Shadowspecspells
 {
     SHADOW_SPECIALIZATION   = 85005,
-    SHADOWFORM_R1           = 85030,
+    SHADOWFORM              = 15473,
     MIND_FLAY               = 85031,
     SPIRIT_TAP              = 85026,
     SHADOW_WEAVING          = 85029,
     DEVOURING_PLAGUE        = 2944,
     MIND_BLAST_SHADOW       = 8092,
+    IMPROVED_MIND_BLAST     = 85032,
 };
 
 // 85004 Shadow Specialization
@@ -1160,7 +1161,7 @@ public:
                 return;
 
             caster->learnSpell(MIND_FLAY, false);
-            caster->learnSpell(SHADOWFORM_R1, false);
+            caster->learnSpell(SHADOWFORM, false);
             caster->learnSpell(SHADOW_SPECIALIZATION, false);
         }
 
@@ -1171,12 +1172,13 @@ public:
                 return;
 
             caster->removeSpell(MIND_FLAY, SPEC_MASK_ALL, false);
-            caster->removeSpell(SHADOWFORM_R1, SPEC_MASK_ALL, false);
+            caster->removeSpell(SHADOWFORM, SPEC_MASK_ALL, false);
             caster->removeSpell(SHADOW_SPECIALIZATION, SPEC_MASK_ALL, false);
             caster->removeSpell(SPIRIT_TAP, SPEC_MASK_ALL, false);
             caster->removeSpell(SHADOW_WEAVING, SPEC_MASK_ALL, false);
             caster->removeSpell(DEVOURING_PLAGUE, SPEC_MASK_ALL, false);
             caster->removeSpell(MIND_BLAST_SHADOW, SPEC_MASK_ALL, false);
+            caster->removeSpell(IMPROVED_MIND_BLAST, SPEC_MASK_ALL, false);
         }
 
         void Register() override

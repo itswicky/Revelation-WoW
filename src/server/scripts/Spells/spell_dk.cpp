@@ -2673,5 +2673,5 @@ void AddSC_deathknight_spell_scripts()
     new spell_dk_scourge_strike();
     new spell_dk_spell_deflection();
     new spell_dk_vampiric_blood();
-    new spell_dk_will_of_the_necropolis();
+    //new spell_dk_will_of_the_necropolis(); COMMENTED OUT TO PREVENT WORLD DB ERROR WITH MODIFIED TALENT.DBC
 }

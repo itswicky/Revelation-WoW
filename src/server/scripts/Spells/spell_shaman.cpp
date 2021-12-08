@@ -1487,6 +1487,7 @@ enum Enhancementspecspells
 {
     ENCHANCEMENT_SPECIALIZATION = 87003,
     STORMSTRIKE                 = 17364,
+    DUAL_WIELD_TRIGGER          = 30798,
     DUAL_WIELD                  = 674,
     MAELSTROM_WEAPON            = 87027,
     SHAMANISTIC_FOCUS           = 43338,
@@ -1521,7 +1522,7 @@ public:
             caster->learnSpell(STORMSTRIKE, false);
             caster->learnSpell(MAELSTROM_WEAPON, false);
             caster->learnSpell(ENCHANCEMENT_SPECIALIZATION, false);
-            caster->CastSpell(caster, 30798);
+            caster->SetCanDualWield(true);
         }
 
         void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/) // Remove auras when unlearned
@@ -1531,7 +1532,6 @@ public:
                 return;
 
             caster->removeSpell(STORMSTRIKE, SPEC_MASK_ALL, false);
-            caster->removeSpell(DUAL_WIELD, SPEC_MASK_ALL, false);
             caster->removeSpell(ENCHANCEMENT_SPECIALIZATION, SPEC_MASK_ALL, false);
             caster->removeSpell(SHAMANISTIC_FOCUS, SPEC_MASK_ALL, false);
             caster->removeSpell(ELEMENTAL_WEAPONS, SPEC_MASK_ALL, false);

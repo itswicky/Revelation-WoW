@@ -1057,6 +1057,7 @@ enum Armsspecspells
     WEAPONS_MASTER      = 89011,
     OVERPOWER           = 7384,
     RETALIATION         = 20230,
+    PUMMEL_ARMS         = 89022,
 };
 
 // 89000 Arms Specialization
@@ -1101,6 +1102,7 @@ public:
             caster->removeSpell(WEAPONS_MASTER, SPEC_MASK_ALL, false);
             caster->removeSpell(OVERPOWER, SPEC_MASK_ALL, false);
             caster->removeSpell(RETALIATION, SPEC_MASK_ALL, false);
+            caster->removeSpell(PUMMEL_ARMS, SPEC_MASK_ALL, false);
         }
 
         void Register() override
@@ -1124,6 +1126,7 @@ enum Furyspecspells
     UNBRIDLED_WRATH     = 89014,
     ENRAGE              = 89016,
     PIERCING_HOWL       = 12323,
+    PUMMEL_FURY         = 6552,
 };
 
 // 89002 Fury Specialization
@@ -1167,6 +1170,7 @@ public:
             caster->removeSpell(UNBRIDLED_WRATH, SPEC_MASK_ALL, false);
             caster->removeSpell(ENRAGE, SPEC_MASK_ALL, false);
             caster->removeSpell(PIERCING_HOWL, SPEC_MASK_ALL, false);
+            caster->removeSpell(PUMMEL_FURY, SPEC_MASK_ALL, false);
         }
 
         void Register() override

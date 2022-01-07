@@ -8277,6 +8277,7 @@ bool Unit::HandleAuraProc(Unit* victim, uint32 damage, Aura* triggeredByAura, Sp
                     case 31656:
                     case 31657:
                     case 31658:
+                    case 83034:
                         {
                             *handled = true;
 

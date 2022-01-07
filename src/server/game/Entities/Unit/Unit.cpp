@@ -6733,6 +6733,17 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                             CastCustomSpell(this, 15290, &team, &self, nullptr, true, castItem, triggeredByAura);
                             return true;                                // no hidden cooldown
                         }
+                    // Vampiric Embrace custom
+                    case 85044:
+                        {
+                            if (!victim || !victim->IsAlive() || procSpell->SpellFamilyFlags[1] & 0x80000)
+                                return false;
+
+                            // heal amount
+                            int32 total = CalculatePct(int32(damage), triggerAmount);
+                            CastCustomSpell(this, 85045, &total, nullptr, nullptr, true, castItem, triggeredByAura);
+                            return true; // no hidden cooldown
+                        }
                     // Priest Tier 6 Trinket (Ashtongue Talisman of Acumen)
                     case 40438:
                         {

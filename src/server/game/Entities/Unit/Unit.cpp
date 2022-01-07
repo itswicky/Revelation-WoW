@@ -8277,7 +8277,6 @@ bool Unit::HandleAuraProc(Unit* victim, uint32 damage, Aura* triggeredByAura, Sp
                     case 31656:
                     case 31657:
                     case 31658:
-                    case 83034:
                         {
                             *handled = true;
 
@@ -8287,6 +8286,18 @@ bool Unit::HandleAuraProc(Unit* victim, uint32 damage, Aura* triggeredByAura, Sp
 
                             int32 bp0 = int32(CalculatePct(GetMaxPower(POWER_MANA), spInfo->Effects[0].CalcValue()));
                             CastCustomSpell(this, 67545, &bp0, nullptr, nullptr, true, nullptr, triggeredByAura->GetEffect(EFFECT_0), GetGUID());
+                            return true;
+                        }
+                    case 83034:
+                        {
+                            *handled = true;
+
+                            SpellInfo const* spInfo = sSpellMgr->GetSpellInfo(83035);
+                            if (!spInfo)
+                                return false;
+
+                            int32 bp0 = int32(CalculatePct(GetMaxPower(POWER_MANA), spInfo->Effects[0].CalcValue()));
+                            CastCustomSpell(this, 83035, &bp0, nullptr, nullptr, true, nullptr, triggeredByAura->GetEffect(EFFECT_0), GetGUID());
                             return true;
                         }
                 }

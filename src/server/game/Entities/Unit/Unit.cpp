@@ -8782,6 +8782,8 @@ bool Unit::HandleProcTriggerSpell(Unit* victim, uint32 damage, AuraEffect* trigg
                                 // percent stored in effect 1 (class scripts) base points
                                 int32 cost = int32(originalSpell->ManaCost + CalculatePct(GetCreateMana(), originalSpell->ManaCostPercentage));
                                 basepoints0 = CalculatePct(cost, auraSpellInfo->Effects[1].CalcValue());
+                                if (this->HasAura(84027))
+                                    basepoints0 += 4;
                                 trigger_spell_id = 20272;
                                 target = this;
                             }
